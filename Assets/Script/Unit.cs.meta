@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 6635681e3f1c86b48bd883a66e8877d2
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - pumpkin: {fileID: 100000, guid: 1d5d33ca6a3f7dd42ba6c5e20b16d810, type: 2}
+  - _hpVal: {instanceID: 0}
+  - _hpBar: {instanceID: 0}
+  - _pump: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
