@@ -62,7 +62,7 @@ public class DataMgr {
 			mUnitData.Add(unitData);
 		}while(false);
 
-		do // unit1
+		do // unit1 grayRat
 		{
 			UnitData unitData;
 			unitData.maxHp = 150;
@@ -76,10 +76,10 @@ public class DataMgr {
 			mUnitData.Add(unitData);
 		}while(false);
 
-		do // unit2
+		do // unit2 Horse
 		{
 			UnitData unitData;
-			unitData.maxHp = 100;
+			unitData.maxHp = 200;
 			unitData.speed = 3;
 			unitData.power = 60;
 			unitData.range = 500;

@@ -33,6 +33,10 @@ public class UnitChooser: MonoBehaviour {
 				gameObject.GetComponentInChildren<UISprite>().spriteName = "btn_unit_rat1";
 				mbOpened = true;
 				break;
+			case EnumCharacterType.CHARACTER_TYPE_HORSE:
+				gameObject.GetComponentInChildren<UISprite>().spriteName = "btn_unit_horse";
+				mbOpened = true;
+				break;
 			}
 
 		}
