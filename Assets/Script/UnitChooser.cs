@@ -7,14 +7,14 @@ public class UnitChooser: MonoBehaviour {
 	public int index = 0;
 	public EnumAliasType aliasType;
 	public EnumCharacterType characterType;
-	List<int> mUnitList;
+//	List<int> mUnitList;
 	List<int> mOpenUnitList;
 	bool mbSelected = false;
 	bool mbOpened = false;
 
 	// Use this for initialization
 	void Start () {
-		mUnitList = PlayMgr.GetInstance().GetUnitList();
+		//mUnitList = PlayMgr.GetInstance().GetUnitList();
 		mOpenUnitList = PlayMgr.GetInstance().GetOpenUnitList();
 		if(mOpenUnitList.Count > 0)
 		{
@@ -31,6 +31,10 @@ public class UnitChooser: MonoBehaviour {
 				break;
 			case EnumCharacterType.CHARACTER_TYPE_RAT1:
 				gameObject.GetComponentInChildren<UISprite>().spriteName = "btn_unit_rat1";
+				mbOpened = true;
+				break;
+			case EnumCharacterType.CHARACTER_TYPE_HORSE:
+				gameObject.GetComponentInChildren<UISprite>().spriteName = "btn_unit_horse";
 				mbOpened = true;
 				break;
 			}
@@ -52,13 +56,13 @@ public class UnitChooser: MonoBehaviour {
 		{
 			if(!mbSelected)
 			{
-				PlayMgr.GetInstance ().GetSelectList ().Add ((int)characterType);
+				PlayMgr.GetInstance ().AddSelectedUnit(characterType);
 				gameObject.transform.FindChild("Img_Selected").gameObject.SetActive(true);
 				mbSelected = true;
 			}
 			else
 			{
-				PlayMgr.GetInstance().GetSelectList().Remove((int)characterType);
+				PlayMgr.GetInstance().RemoveSelectedUnit(characterType);
 				gameObject.transform.FindChild("Img_Selected").gameObject.SetActive(false);
 				mbSelected = false;
 			}

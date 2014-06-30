@@ -25,9 +25,8 @@ public class UnitCreator: MonoBehaviour {
 		}
 
 		mButtonIndex = gameObject.GetComponent<UnitButton>().buttonIndex;
-
-		List<int> selectList = PlayMgr.GetInstance ().GetSelectList ();
-		EnumCharacterType charType = (EnumCharacterType)selectList[mButtonIndex];
+		
+		EnumCharacterType charType = PlayMgr.GetInstance().GetSelectedUnitAt(mButtonIndex);
 
 		UnitData unitData =  DataMgr.GetInstance().GetUnitData(charType);
 		mUnitPrice = unitData.price;

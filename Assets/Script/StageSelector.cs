@@ -2,18 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 public class StageSelector : MonoBehaviour {
-
+	public int index;
 	int stageNo;
 	// Use this for initialization
 	void Start () {
 		stageNo = PlayMgr.GetInstance().openStageNo;
-
-		for(int i=1; i<= stageNo + 1; i++)
+	
+		if(index <= stageNo)
 		{
-			if(gameObject.ToString().Substring(6).Contains(i.ToString()))
-			{
-				gameObject.GetComponent<UISprite>().spriteName = "btn_stage";
-			}
+			gameObject.GetComponentInChildren<UISprite>().spriteName = "btn_stage";
 		}
 	}
 	
@@ -22,9 +19,13 @@ public class StageSelector : MonoBehaviour {
 		
 	}
 
-	public void SelectStage() {
-//		Debug.Log(System.Int32.Parse(gameObject.ToString().Substring(6,1)));
-		PlayMgr.GetInstance ().currentStageNo = System.Int32.Parse(gameObject.ToString().Substring(6,1)) - 1;
+	public void SelectStage(GameObject gameObj) {
+		if(index > stageNo)
+		{
+			return;
+		}
+		PlayMgr.GetInstance().currentStageNo = gameObj.GetComponent<StageSelector>().index;
+	//	Debug.Log ("asd " + PlayMgr.GetInstance().currentStageNo ); 
 		Application.LoadLevel("savetheplum");
 	}
 }

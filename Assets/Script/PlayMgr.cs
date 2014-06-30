@@ -8,7 +8,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
 public class PlayMgr {
-	private List<int> mSelectList;
+	private List<int> mSelectedList;
+
 	private List<int> mUnitList;
 	private List<int> mOpenUnitList;
 
@@ -19,7 +20,8 @@ public class PlayMgr {
 
 	private PlayMgr()
 	{
-		mSelectList = new List<int> ();
+		mSelectedList = new List<int> ();
+
 		mUnitList = new List<int> ();
 		mOpenUnitList = new List<int> ();
 
@@ -37,9 +39,33 @@ public class PlayMgr {
 		return mInstance;
 	}
 
-	public List<int> GetSelectList()
+	public void AddSelectedUnit( EnumCharacterType charType )
 	{
-		return mSelectList;
+		//마리수 제한 체크도 필요
+		if(mSelectedList.Contains((int)charType))
+			return;
+		mSelectedList.Add((int)charType);
+	} 
+	public void RemoveSelectedUnit( EnumCharacterType charType )
+	{
+		if(mSelectedList.Contains((int)charType))
+		{
+			mSelectedList.Remove((int)charType);
+		}
+	}
+	public EnumCharacterType GetSelectedUnitAt(int index)
+	{
+		if( index < mSelectedList.Count )
+			return (EnumCharacterType)mSelectedList[index];
+		return EnumCharacterType.CHARACTER_TYPE_NONE;
+	}
+	public void ClearSelectedUnit()
+	{
+		mSelectedList.Clear();
+	}
+	public int CountSelectedUnit()
+	{
+		return mSelectedList.Count;
 	}
 
 	public List<int> GetUnitList()

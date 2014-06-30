@@ -9,27 +9,30 @@ public class UnitButton : MonoBehaviour {
 	public EnumCharacterType charType;
 
 	// Use this for initializationtonI
+	private bool isRefresh;
 	void Start () {
 		charType = EnumCharacterType.CHARACTER_TYPE_NONE;
+		isRefresh = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		List<int> selectList = PlayMgr.GetInstance ().GetSelectList ();
 
-		if (buttonIndex < selectList.Count) {
-			charType = (EnumCharacterType)selectList[buttonIndex];
+		if( !isRefresh )
+		{
 			refreshCharacter();
 		}
 		else
 		{
-			charType = EnumCharacterType.CHARACTER_TYPE_NONE;
-			Transform child = gameObject.transform.FindChild ("ChooseCharImg");
-			if(child != null)
+			EnumCharacterType _charType = PlayMgr.GetInstance().GetSelectedUnitAt(buttonIndex);
+			if( charType != _charType )
 			{
-				child.gameObject.SetActive(false);
+				//현재 인덱스에 캐릭터가 바뀌었을떄
+				charType = _charType;
+				isRefresh = false;
 			}
 		}
+
 	}
 
 	void refreshCharacter()
@@ -47,8 +50,8 @@ public class UnitButton : MonoBehaviour {
 				child.transform.localScale = new Vector3(138,144,1);
 				break;
 		case EnumCharacterType.CHARACTER_TYPE_HORSE:
-				spriteName = "말";
-				child.transform.localScale = new Vector3(153,137,1);
+				spriteName = "btn_unit_horse";
+				child.transform.localScale = new Vector3(138,144,1);
 				break;
 		case EnumCharacterType.CHARACTER_TYPE_RAT1:
 				spriteName = "쥐1";
@@ -64,5 +67,6 @@ public class UnitButton : MonoBehaviour {
 				childName.spriteName = spriteName;
 			}
 		}
+		isRefresh = true;
 	}
 }

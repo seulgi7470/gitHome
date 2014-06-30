@@ -51,7 +51,7 @@ public class GM : MonoBehaviour {
 		stageNo = PlayMgr.GetInstance().currentStageNo;
 		if(stageNo >= 1)
 		{
-			PlayMgr.GetInstance().SetOpenUnitList(EnumCharacterType.CHARACTER_TYPE_RAT);
+			PlayMgr.GetInstance().SetOpenUnitList(EnumCharacterType.CHARACTER_TYPE_HORSE);
 		}
 		Debug.Log ("get StageNo = " + stageNo);
 		stageText.text = (PlayMgr.GetInstance().currentStageNo + 1).ToString("N0");
@@ -296,16 +296,10 @@ public class GM : MonoBehaviour {
 	}
 
 	public void StartGame() {
-		if(PlayMgr.GetInstance().GetSelectList().Count <= 0)
+		if(PlayMgr.GetInstance().CountSelectedUnit() <= 0)
 			return;
 		else
 		{
-			List<int> selectList = PlayMgr.GetInstance().GetSelectList();
-			for(int i= selectList.Count; i < 5; i++)
-			{
-				selectList.Add ((int)EnumCharacterType.CHARACTER_TYPE_NONE);
-			}
-
 			startUI.SetActive (false);
 			gameUI.SetActive (true);
 			Time.timeScale = 1.0f;
