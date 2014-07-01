@@ -8,14 +8,16 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
 public class PlayMgr {
-	private List<int> mSelectedList;
 
 	private List<int> mUnitList;
 	private List<int> mOpenUnitList;
-
-	private int mSproutValue;
-	private int mStage;
 	private int mOpenStage;
+
+	// 게임 한 판에 쓰이는 변수들
+	private List<int> mSelectedList;
+	private int mSproutValue;
+	private int mCurrentStage;
+
 	private static PlayMgr mInstance;
 
 	private PlayMgr()
@@ -89,6 +91,10 @@ public class PlayMgr {
 			{
 				if(mOpenUnitList[i] == -1)
 				{
+					if(mOpenUnitList.Contains((int)charType))
+					{
+						return;
+					}
 					mOpenUnitList.RemoveAt(i);
 					mOpenUnitList.Insert(i,(int)charType);
 					break;
@@ -124,8 +130,8 @@ public class PlayMgr {
 	}
 
 	public int sproutValue { get { return mSproutValue; } set { mSproutValue = value; } }
-	public int currentStageNo { get { mStage = PlayerPrefs.GetInt("currentStageNo");	return mStage; } 
-		set { mStage = value;   PlayerPrefs.SetInt("currentStageNo", mStage);} }
+	public int currentStageNo { get { mCurrentStage = PlayerPrefs.GetInt("currentStageNo");	return mCurrentStage; } 
+		set { mCurrentStage = value;   PlayerPrefs.SetInt("currentStageNo", mCurrentStage);} }
 	public int openStageNo { get { mOpenStage = PlayerPrefs.GetInt("OpenStageNo");	return mOpenStage; } 
 		set { mOpenStage = value;   PlayerPrefs.SetInt("OpenStageNo", mOpenStage);} }
 

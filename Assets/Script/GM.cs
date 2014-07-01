@@ -53,7 +53,7 @@ public class GM : MonoBehaviour {
 		{
 			PlayMgr.GetInstance().SetOpenUnitList(EnumCharacterType.CHARACTER_TYPE_HORSE);
 		}
-		Debug.Log ("get StageNo = " + stageNo);
+		Debug.Log ("get CurrentStageNo = " + stageNo);
 		stageText.text = (PlayMgr.GetInstance().currentStageNo + 1).ToString("N0");
 		PlayMgr.GetInstance().GetOpenUnitList();
 	}
