@@ -34,6 +34,15 @@ namespace CommonData
 		ANIMATION_STATE_DEAD
 	};
 
+	public enum EnumGameState
+	{
+		GAME_STATE_NONE = -1,
+		GAME_STATE_STOP,
+		GAME_STATE_SELECTUNIT,
+		GAME_STATE_PLAYGAME,
+		GAME_STATE_GAMERESULT
+	};
+
 	public struct CharType
 	{
 		public EnumAliasType AliasType;

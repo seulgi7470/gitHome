@@ -17,6 +17,7 @@ public class PlayMgr {
 	private List<int> mSelectedList;
 	private int mSproutValue;
 	private int mCurrentStage;
+	private EnumGameState mGameState;
 
 	private static PlayMgr mInstance;
 
@@ -30,6 +31,8 @@ public class PlayMgr {
 		mUnitList.Add((int)EnumCharacterType.CHARACTER_TYPE_RAT);
 		mUnitList.Add((int)EnumCharacterType.CHARACTER_TYPE_HORSE);
 		mUnitList.Add((int)EnumCharacterType.CHARACTER_TYPE_RAT1);
+
+		mGameState = EnumGameState.GAME_STATE_NONE;
 
 	}
 
@@ -130,10 +133,13 @@ public class PlayMgr {
 	}
 
 	public int sproutValue { get { return mSproutValue; } set { mSproutValue = value; } }
+
 	public int currentStageNo { get { mCurrentStage = PlayerPrefs.GetInt("currentStageNo");	return mCurrentStage; } 
 		set { mCurrentStage = value;   PlayerPrefs.SetInt("currentStageNo", mCurrentStage);} }
+
 	public int openStageNo { get { mOpenStage = PlayerPrefs.GetInt("OpenStageNo");	return mOpenStage; } 
 		set { mOpenStage = value;   PlayerPrefs.SetInt("OpenStageNo", mOpenStage);} }
 
+	public EnumGameState gameState { get { return mGameState; } set { mGameState = value; } }
 
 }

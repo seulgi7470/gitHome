@@ -13,11 +13,13 @@ public class GM : MonoBehaviour {
 	public Transform enemySpawn;
 	public GameObject bullet;
 	public Transform bulletObjPool;
-
-	public GameObject resultUI;
-	public TextMesh resultText;
+	
 	public GameObject startUI;
 	public GameObject gameUI;
+	public GameObject resultUI;
+	public TextMesh resultText;
+	public GameObject pauseUI;
+
 	public int[,] enemyList;
 	public int stageNo;
 	public int sproutDelay = 0;
@@ -25,6 +27,7 @@ public class GM : MonoBehaviour {
 
 	bool mbSpawnChk = true;
 	int mEnemyIndex = 0;
+	EnumGameState mGameState;
 
 	// Use this for initialization
 	void Start () {
@@ -48,6 +51,7 @@ public class GM : MonoBehaviour {
 		if (!mbSpawnChk) {
 			mbSpawnChk = true;
 		}
+
 		stageNo = PlayMgr.GetInstance().currentStageNo;
 		if(stageNo >= 1)
 		{
@@ -56,6 +60,8 @@ public class GM : MonoBehaviour {
 		Debug.Log ("get CurrentStageNo = " + stageNo);
 		stageText.text = (PlayMgr.GetInstance().currentStageNo + 1).ToString("N0");
 		PlayMgr.GetInstance().GetOpenUnitList();
+		mGameState = PlayMgr.GetInstance().gameState;
+
 	}
 	
 	// Update is called once per frame
@@ -257,10 +263,45 @@ public class GM : MonoBehaviour {
 		return strPath;
 	}
 
+	public void ChangeUItoState(EnumGameState eGameState)
+	{
+		switch(eGameState)
+		{
+		case EnumGameState.GAME_STATE_STOP:
+			startUI.SetActive(false);
+			resultUI.SetActive(false);
+			pauseUI.SetActive(true);
+			Time.timeScale = 0.0f;
+			break;
+		case EnumGameState.GAME_STATE_SELECTUNIT:
+			startUI.SetActive (true);
+			gameUI.SetActive (false);
+			resultUI.SetActive(false);
+			pauseUI.SetActive(false);
+			Application.LoadLevel("savetheplum");
+			break;
+		case EnumGameState.GAME_STATE_PLAYGAME:
+			startUI.SetActive (false);
+			gameUI.SetActive (true);
+			resultUI.SetActive(false);
+			pauseUI.SetActive(false);
+			Time.timeScale = 1.0f;
+			break;
+		case EnumGameState.GAME_STATE_GAMERESULT:
+			Time.timeScale = 0.0f;
+			startUI.SetActive(false);
+			resultUI.SetActive(true);
+			pauseUI.SetActive(false);
+			break;
+		}
+	}
 
 	public void GameOver(string wlChk) {
+
+		ChangeUItoState(PlayMgr.GetInstance().gameState);
 		if(wlChk.Equals("GameLose"))
 		{
+			resultUI.transform.FindChild("NextBtn").gameObject.SetActive(false);
 			resultText.text = " You Lose ";
 		}
 		else if(wlChk.Equals("GameWin"))
@@ -271,8 +312,7 @@ public class GM : MonoBehaviour {
 				PlayMgr.GetInstance().openStageNo++;
 			}
 		}
-		Time.timeScale = 0.0f;
-		resultUI.SetActive(true);
+
 	}
 
 	public void ReturnSelectStage() {
@@ -281,18 +321,14 @@ public class GM : MonoBehaviour {
 	
 	public void ReplayGame() {
 		PlayMgr.GetInstance().currentStageNo = stageNo;
-		gameUI.SetActive (false);
-		resultUI.SetActive(false);
-		startUI.SetActive (true);
-		Application.LoadLevel("savetheplum");
+		mGameState = PlayMgr.GetInstance().gameState = EnumGameState.GAME_STATE_SELECTUNIT;
+		ChangeUItoState(mGameState);
 	}
 
 	public void NextGame() {
 		PlayMgr.GetInstance().currentStageNo++;
-		gameUI.SetActive (false);
-		resultUI.SetActive(false);
-		startUI.SetActive (true);
-		Application.LoadLevel("savetheplum");
+		mGameState = PlayMgr.GetInstance().gameState = EnumGameState.GAME_STATE_SELECTUNIT;
+		ChangeUItoState(mGameState);
 	}
 
 	public void StartGame() {
@@ -300,12 +336,21 @@ public class GM : MonoBehaviour {
 			return;
 		else
 		{
-			startUI.SetActive (false);
-			gameUI.SetActive (true);
-			Time.timeScale = 1.0f;
+			mGameState = PlayMgr.GetInstance().gameState = EnumGameState.GAME_STATE_PLAYGAME;
+			ChangeUItoState(mGameState);
 			PlayMgr.GetInstance().sproutValue = 0;
 			StartCoroutine (CreateEnemy ());
 		}
+	}
+
+	public void PauseGame() {
+		mGameState = PlayMgr.GetInstance().gameState = EnumGameState.GAME_STATE_STOP;
+		ChangeUItoState(mGameState);
+	}
+
+	public void ReturnGame() {
+		mGameState = PlayMgr.GetInstance().gameState = EnumGameState.GAME_STATE_PLAYGAME;
+		ChangeUItoState(mGameState);
 	}
 
 	public void OnPressedStartBtn(GameObject gameObj) {

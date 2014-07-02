@@ -23,6 +23,7 @@ public class Unit : MonoBehaviour {
 	bool mbDied = false;
 	EnumAnimationState mAnimationState = EnumAnimationState.ANIMATION_STATE_NONE;
 	SPSpriteAnimation mSpriteAnim;
+	EnumGameState mGameState;
 
 	// Use this for initialization
 	void Start () {
@@ -33,6 +34,7 @@ public class Unit : MonoBehaviour {
 
 		LoadUnitData ();
 		Animate ( EnumAnimationState.ANIMATION_STATE_MOVE );
+		mGameState = EnumGameState.GAME_STATE_PLAYGAME;
 	}
 
 	public void LoadUnitData() {
@@ -203,6 +205,8 @@ public class Unit : MonoBehaviour {
 		} else if (hp <= 0) {
 			mbDied = true;
 			Animate (EnumAnimationState.ANIMATION_STATE_DEAD);
+			mGameState = EnumGameState.GAME_STATE_GAMERESULT;
+			PlayMgr.GetInstance().gameState = mGameState;
 			if(gameObject == GameObject.Find("UnitTower(Clone)"))
 			{
 				GameObject.FindWithTag("GM").SendMessage("GameOver", "GameLose");

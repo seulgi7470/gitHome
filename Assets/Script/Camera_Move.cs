@@ -29,7 +29,8 @@ public class Camera_Move : MonoBehaviour {
 			}
 		}
 		float deltaX = mDestX - gameObject.transform.position.x;
-		MoveCamera (deltaX);
+		if(PlayMgr.GetInstance().gameState == CommonData.EnumGameState.GAME_STATE_PLAYGAME)
+			MoveCamera (deltaX);
 	}
 
 	void MoveCamera(float dx)

@@ -11,7 +11,7 @@ public class Quit : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKey(KeyCode.Escape))
+		if(Input.GetKeyDown(KeyCode.Escape))
 	  	{
 			if(mbQuit)
 			{
@@ -19,7 +19,9 @@ public class Quit : MonoBehaviour {
 				Application.Quit();
 			}
 			else
+			{
 				mbQuit = true;
+			}
 
 		}
 	}
