@@ -309,10 +309,10 @@ public class GM : MonoBehaviour {
 	}
 
 	public void OnPressedStartBtn(GameObject gameObj) {
-		gameObj.GetComponentInChildren<UISprite>().spriteName = "btn_start_on";
+		//gameObj.GetComponentInChildren<UISprite>().spriteName = "btn_start_on";
 	}
 
 	public void OnReleasedStartBtn(GameObject gameObj) {
-		gameObj.GetComponentInChildren<UISprite>().spriteName = "btn_start";
+		//gameObj.GetComponentInChildren<UISprite>().spriteName = "btn_start";
 	}
 }
