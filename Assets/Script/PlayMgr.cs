@@ -140,6 +140,14 @@ public class PlayMgr {
 	public int openStageNo { get { mOpenStage = PlayerPrefs.GetInt("OpenStageNo");	return mOpenStage; } 
 		set { mOpenStage = value;   PlayerPrefs.SetInt("OpenStageNo", mOpenStage);} }
 
+	public void NextStage()
+	{
+		if( mCurrentStage == mOpenStage )
+		{
+			mOpenStage++;
+		}
+	}
+
 	public EnumGameState gameState { get { return mGameState; } set { mGameState = value; } }
 
 }

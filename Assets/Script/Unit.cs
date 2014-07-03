@@ -205,16 +205,16 @@ public class Unit : MonoBehaviour {
 		} else if (hp <= 0) {
 			mbDied = true;
 			Animate (EnumAnimationState.ANIMATION_STATE_DEAD);
-			mGameState = EnumGameState.GAME_STATE_GAMERESULT;
-			PlayMgr.GetInstance().gameState = mGameState;
-			if(gameObject == GameObject.Find("UnitTower(Clone)"))
+			switch (characterType)
 			{
-				GameObject.FindWithTag("GM").SendMessage("GameOver", "GameLose");
+			case EnumCharacterType.CHARACTER_TYPE_UNITTOWER:
+				GameObject.FindWithTag("GM").SendMessage("GameOver", false);
+				break;
+			case EnumCharacterType.CHARACTER_TYPE_ENEMYTOWER:
+				GameObject.FindWithTag("GM").SendMessage("GameOver", true);
+				break;
 			}
-			if(gameObject == GameObject.Find("EnemyTower(Clone)"))
-			{
-				GameObject.FindWithTag("GM").SendMessage("GameOver", "GameWin");
-			}
+	
 		}
 	}
 

@@ -265,6 +265,7 @@ public class GM : MonoBehaviour {
 
 	public void ChangeUItoState(EnumGameState eGameState)
 	{
+		PlayMgr.GetInstance().gameState = eGameState;
 		switch(eGameState)
 		{
 		case EnumGameState.GAME_STATE_STOP:
@@ -296,22 +297,10 @@ public class GM : MonoBehaviour {
 		}
 	}
 
-	public void GameOver(string wlChk) {
+	public void GameOver(bool win) {
 
-		ChangeUItoState(PlayMgr.GetInstance().gameState);
-		if(wlChk.Equals("GameLose"))
-		{
-			resultUI.transform.FindChild("NextBtn").gameObject.SetActive(false);
-			resultText.text = " You Lose ";
-		}
-		else if(wlChk.Equals("GameWin"))
-		{
-			resultText.text = " You win ";
-			if(PlayMgr.GetInstance().currentStageNo == PlayMgr.GetInstance().openStageNo)
-			{
-				PlayMgr.GetInstance().openStageNo++;
-			}
-		}
+		ChangeUItoState(EnumGameState.GAME_STATE_GAMERESULT);
+		resultUI.SendMessage("SetGameResult", win);
 
 	}
 
@@ -321,14 +310,12 @@ public class GM : MonoBehaviour {
 	
 	public void ReplayGame() {
 		PlayMgr.GetInstance().currentStageNo = stageNo;
-		mGameState = PlayMgr.GetInstance().gameState = EnumGameState.GAME_STATE_SELECTUNIT;
-		ChangeUItoState(mGameState);
+		ChangeUItoState(EnumGameState.GAME_STATE_SELECTUNIT);
 	}
 
 	public void NextGame() {
 		PlayMgr.GetInstance().currentStageNo++;
-		mGameState = PlayMgr.GetInstance().gameState = EnumGameState.GAME_STATE_SELECTUNIT;
-		ChangeUItoState(mGameState);
+		ChangeUItoState(EnumGameState.GAME_STATE_SELECTUNIT);
 	}
 
 	public void StartGame() {
@@ -336,21 +323,18 @@ public class GM : MonoBehaviour {
 			return;
 		else
 		{
-			mGameState = PlayMgr.GetInstance().gameState = EnumGameState.GAME_STATE_PLAYGAME;
-			ChangeUItoState(mGameState);
+			ChangeUItoState(EnumGameState.GAME_STATE_PLAYGAME);
 			PlayMgr.GetInstance().sproutValue = 0;
 			StartCoroutine (CreateEnemy ());
 		}
 	}
 
 	public void PauseGame() {
-		mGameState = PlayMgr.GetInstance().gameState = EnumGameState.GAME_STATE_STOP;
-		ChangeUItoState(mGameState);
+		ChangeUItoState(EnumGameState.GAME_STATE_STOP);
 	}
 
 	public void ReturnGame() {
-		mGameState = PlayMgr.GetInstance().gameState = EnumGameState.GAME_STATE_PLAYGAME;
-		ChangeUItoState(mGameState);
+		ChangeUItoState(EnumGameState.GAME_STATE_PLAYGAME);
 	}
 
 	public void OnPressedStartBtn(GameObject gameObj) {
