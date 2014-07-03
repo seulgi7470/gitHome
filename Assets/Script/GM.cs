@@ -301,6 +301,10 @@ public class GM : MonoBehaviour {
 
 		ChangeUItoState(EnumGameState.GAME_STATE_GAMERESULT);
 		resultUI.SendMessage("SetGameResult", win);
+		if(win)
+		{
+			PlayMgr.GetInstance().OpenNextStage();
+		}
 
 	}
 

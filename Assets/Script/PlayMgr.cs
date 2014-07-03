@@ -140,11 +140,11 @@ public class PlayMgr {
 	public int openStageNo { get { mOpenStage = PlayerPrefs.GetInt("OpenStageNo");	return mOpenStage; } 
 		set { mOpenStage = value;   PlayerPrefs.SetInt("OpenStageNo", mOpenStage);} }
 
-	public void NextStage()
+	public void OpenNextStage()
 	{
-		if( mCurrentStage == mOpenStage )
+		if( currentStageNo == openStageNo )
 		{
-			mOpenStage++;
+			openStageNo++;
 		}
 	}
 
