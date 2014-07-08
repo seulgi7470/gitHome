@@ -55,7 +55,7 @@ public class GM : MonoBehaviour {
 		stageNo = PlayMgr.GetInstance().currentStageNo;
 		if(stageNo >= 1)
 		{
-			PlayMgr.GetInstance().SetOpenUnitList(EnumCharacterType.CHARACTER_TYPE_HORSE);
+			PlayMgr.GetInstance().SetOpenUnitList(EnumCharacterType.CHARACTER_TYPE_ELEPHANT);
 		}
 		Debug.Log ("get CurrentStageNo = " + stageNo);
 		stageText.text = (PlayMgr.GetInstance().currentStageNo + 1).ToString("N0");

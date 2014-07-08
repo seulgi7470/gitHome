@@ -29,8 +29,8 @@ public class UnitChooser: MonoBehaviour {
 				gameObject.GetComponentInChildren<UISprite>().spriteName = "btn_unit_rat";
 				mbOpened = true;
 				break;
-			case EnumCharacterType.CHARACTER_TYPE_RAT1:
-				gameObject.GetComponentInChildren<UISprite>().spriteName = "btn_unit_rat1";
+			case EnumCharacterType.CHARACTER_TYPE_ELEPHANT:
+				gameObject.GetComponentInChildren<UISprite>().spriteName = "btn_unit_elephant";
 				mbOpened = true;
 				break;
 			case EnumCharacterType.CHARACTER_TYPE_HORSE:

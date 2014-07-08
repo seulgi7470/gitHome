@@ -85,35 +85,35 @@ public class DataMgr {
 			unitData.range = 100;
 			unitData.bulletDelay = 2;
 			unitData.bulletSpeed = 2;
+			unitData.price = 50;
+			unitData.unitDelay = 100;
+			mUnitData.Add(unitData);
+		}while(false);
+
+		do // unit3 Rat1
+		{
+			UnitData unitData;
+			unitData.maxHp = 100;
+			unitData.speed = 3;
+			unitData.power = 30;
+			unitData.range = 100;
+			unitData.bulletDelay = 3;
+			unitData.bulletSpeed = 3;
 			unitData.price = 30;
 			unitData.unitDelay = 100;
 			mUnitData.Add(unitData);
 		}while(false);
 
-		do // unit3
+		do // unit4 Elephant
 		{
 			UnitData unitData;
-			unitData.maxHp = 70;
-			unitData.speed = 3;
-			unitData.power = 40;
-			unitData.range = 200;
-			unitData.bulletDelay = 2;
-			unitData.bulletSpeed = 3;
-			unitData.price = 20;
-			unitData.unitDelay = 50;
-			mUnitData.Add(unitData);
-		}while(false);
-
-		do // unit4
-		{
-			UnitData unitData;
-			unitData.maxHp = 200;
+			unitData.maxHp = 300;
 			unitData.speed = 1;
 			unitData.power = 70;
 			unitData.range = 200;
-			unitData.bulletDelay = 3;
+			unitData.bulletDelay = 1;
 			unitData.bulletSpeed = 2;
-			unitData.price = 100;
+			unitData.price = 50;
 			unitData.unitDelay = 200;
 			mUnitData.Add(unitData);
 		}while(false);

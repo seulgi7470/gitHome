@@ -30,7 +30,7 @@ public class PlayMgr {
 
 		mUnitList.Add((int)EnumCharacterType.CHARACTER_TYPE_RAT);
 		mUnitList.Add((int)EnumCharacterType.CHARACTER_TYPE_HORSE);
-		mUnitList.Add((int)EnumCharacterType.CHARACTER_TYPE_RAT1);
+		mUnitList.Add((int)EnumCharacterType.CHARACTER_TYPE_ELEPHANT);
 
 		mGameState = EnumGameState.GAME_STATE_NONE;
 
