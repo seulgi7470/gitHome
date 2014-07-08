@@ -28,9 +28,11 @@ public class Camera_Move : MonoBehaviour {
 				mDestX = gameObject.transform.position.x + dx;
 			}
 		}
-		float deltaX = mDestX - gameObject.transform.position.x;
 		if(PlayMgr.GetInstance().gameState == CommonData.EnumGameState.GAME_STATE_PLAYGAME)
+		{
+			float deltaX = mDestX - gameObject.transform.position.x;
 			MoveCamera (deltaX);
+		}
 	}
 
 	void MoveCamera(float dx)

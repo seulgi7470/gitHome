@@ -27,7 +27,6 @@ public class GM : MonoBehaviour {
 
 	bool mbSpawnChk = true;
 	int mEnemyIndex = 0;
-	EnumGameState mGameState;
 
 	// Use this for initialization
 	void Start () {
@@ -60,7 +59,6 @@ public class GM : MonoBehaviour {
 		Debug.Log ("get CurrentStageNo = " + stageNo);
 		stageText.text = (PlayMgr.GetInstance().currentStageNo + 1).ToString("N0");
 		PlayMgr.GetInstance().GetOpenUnitList();
-		mGameState = PlayMgr.GetInstance().gameState;
 
 	}
 	
@@ -162,10 +160,24 @@ public class GM : MonoBehaviour {
 			var bullet1 = Instantiate
 				(Resources.Load ("Prefabs/Arrow"), Vector3.zero, Quaternion.identity) as GameObject;
 			bullet1.transform.parent = bulletObjPool;
-			bullet1.transform.localPosition = sendBC.position;
+			bullet1.transform.localPosition = new Vector3(sendBC.position.x,
+			            						sendBC.position.y + 15.0f,
+			           							sendBC.position.z);
 			bullet1.transform.localScale = new Vector3 (1, 1, 15);
 			bullet1.SendMessage("LoadBullet", sendBC);
         }
+		else if(sendBC.unitType == EnumCharacterType.CHARACTER_TYPE_ELEPHANT)
+		{
+			var bullet1 = Instantiate
+				(Resources.Load ("Prefabs/Water"), Vector3.zero, Quaternion.identity) as GameObject;
+			bullet1.transform.parent = bulletObjPool;
+			bullet1.transform.localPosition = new Vector3(sendBC.position.x + 100.0f,
+			                                              sendBC.position.y + 45.0f,
+			                                              sendBC.position.z);
+		//	Debug.Log ("sendBC position " + sendBC.position + " water position " + bullet1.transform.localPosition);
+			bullet1.transform.localScale = new Vector3 (1, 1, 15);
+			bullet1.SendMessage("LoadBullet", sendBC);
+		}
 		else
 		{
 			var bullet1 = Instantiate

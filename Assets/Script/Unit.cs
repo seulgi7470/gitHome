@@ -132,7 +132,7 @@ public class Unit : MonoBehaviour {
 		sendBC.delay = bulletDelay;
 		sendBC.unitType = characterType;
 		sendBC.aliasType = aliasType;
-		sendBC.range = range + 300;
+		sendBC.range = range + 100;
 		sendBC.damage = power;
 		sendBC.speed = bulletSpeed;
 		sendBC.position = gameObject.transform.localPosition;
@@ -214,7 +214,6 @@ public class Unit : MonoBehaviour {
 				GameObject.FindWithTag("GM").SendMessage("GameOver", true);
 				break;
 			}
-	
 		}
 	}
 
