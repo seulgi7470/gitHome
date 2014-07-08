@@ -68,11 +68,11 @@ public class DataMgr {
 			unitData.maxHp = 150;
 			unitData.speed = 4;
 			unitData.power = 20;
-			unitData.range = 100;
+			unitData.range = 50;
 			unitData.bulletDelay = 1;
 			unitData.bulletSpeed = 3;
 			unitData.price = 30;
-			unitData.unitDelay = 100;
+			unitData.unitDelay = 50;
 			mUnitData.Add(unitData);
 		}while(false);
 
@@ -109,8 +109,8 @@ public class DataMgr {
 			UnitData unitData;
 			unitData.maxHp = 300;
 			unitData.speed = 1;
-			unitData.power = 5;
-			unitData.range = 500;
+			unitData.power = 50;
+			unitData.range = 300;
 			unitData.bulletDelay = 1;
 			unitData.bulletSpeed = 2;
 			unitData.price = 50;

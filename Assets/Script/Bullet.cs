@@ -46,7 +46,7 @@ public class Bullet : MonoBehaviour {
 		if (mbDied)
 			return;
 
-		if(bulletUnitType == EnumCharacterType.CHARACTER_TYPE_ELEPHANT)
+		if(bulletUnitType == EnumCharacterType.CHARACTER_TYPE_ELEPHANT) // 여러마리 동시 공격 
 		{
 			if(coll.transform.tag == "enemy")
 			{

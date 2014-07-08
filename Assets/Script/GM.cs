@@ -27,6 +27,7 @@ public class GM : MonoBehaviour {
 
 	bool mbSpawnChk = true;
 	int mEnemyIndex = 0;
+	int rand;
 
 	// Use this for initialization
 	void Start () {
@@ -98,7 +99,7 @@ public class GM : MonoBehaviour {
 		{
 			UnitData unitdata = DataMgr.GetInstance().GetUnitData(charType);
 			// 백개의 랜덤 홀수는 1배 짝수중 0 <= x < 50 은 1.5배 60 <= x < 99 은 2배 50 <= x < 60 은 3배
-			int rand = Random.Range(0,100); 
+			rand = Random.Range(0,100); 
 			if(rand % 2 == 1)
 			{
 				unit1.transform.localScale = new Vector3(1,1,1);
@@ -107,18 +108,18 @@ public class GM : MonoBehaviour {
 			{
 				if(rand >= 0 && rand < 50)
 				{
-					unit1.transform.localScale = new Vector3(1.5f,1.5f,1.5f);
-					unitdata.maxHp *= 1.5f;
+					unit1.transform.localScale = new Vector3(1.2f,1.2f,1.2f);
+					unitdata.maxHp *= 1.2f;
 				}
 				else if(rand >= 60 && rand < 100)
 				{
-					unit1.transform.localScale = new Vector3(2,2,2);
-					unitdata.maxHp *= 2;
+					unit1.transform.localScale = new Vector3(1.5f,1.5f,1.5f);
+					unitdata.maxHp *= 1.5f;
 				}
 				else
 				{
-					unit1.transform.localScale = new Vector3(3,3,3);
-					unitdata.maxHp *= 3;
+					unit1.transform.localScale = new Vector3(2,2,2);
+					unitdata.maxHp *= 2;
 				}
 			}
 		}
@@ -161,8 +162,10 @@ public class GM : MonoBehaviour {
 				(Resources.Load ("Prefabs/Arrow"), Vector3.zero, Quaternion.identity) as GameObject;
 			bullet1.transform.parent = bulletObjPool;
 			bullet1.transform.localPosition = new Vector3(sendBC.position.x,
-			            						sendBC.position.y + 15.0f,
+			            						sendBC.position.y + 48.0f,
 			           							sendBC.position.z);
+	//		Debug.Log ("sendBC position " + sendBC.position + " arrow position " + bullet1.transform.localPosition);
+
 			bullet1.transform.localScale = new Vector3 (1, 1, 15);
 			bullet1.SendMessage("LoadBullet", sendBC);
         }
@@ -171,10 +174,35 @@ public class GM : MonoBehaviour {
 			var bullet1 = Instantiate
 				(Resources.Load ("Prefabs/Water"), Vector3.zero, Quaternion.identity) as GameObject;
 			bullet1.transform.parent = bulletObjPool;
-			bullet1.transform.localPosition = new Vector3(sendBC.position.x + 100.0f,
-			                                              sendBC.position.y + 45.0f,
-			                                              sendBC.position.z);
-		//	Debug.Log ("sendBC position " + sendBC.position + " water position " + bullet1.transform.localPosition);
+			if(rand % 2 == 1)
+			{
+				bullet1.transform.localPosition = new Vector3(sendBC.position.x + 115.0f,
+				                                              sendBC.position.y + 90.0f,
+				                                              sendBC.position.z);
+			}
+			else
+			{
+				if(rand >= 0 && rand < 50)
+				{
+					bullet1.transform.localPosition = new Vector3(sendBC.position.x + (115.0f * 1.2f),
+					                                              sendBC.position.y + (90.0f * 1.2f),
+					                                              sendBC.position.z);
+				}
+				else if(rand >= 60 && rand < 100)
+				{
+					bullet1.transform.localPosition = new Vector3(sendBC.position.x + (115.0f * 1.5f),
+					                                              sendBC.position.y + (90.0f * 1.5f),
+					                                              sendBC.position.z);
+				}
+				else
+				{
+					bullet1.transform.localPosition = new Vector3(sendBC.position.x + (115.0f * 2.0f),
+					                                              sendBC.position.y + (90.0f * 2.0f),
+					                                              sendBC.position.z);
+				}
+			}
+			
+	//		Debug.Log ("sendBC position " + sendBC.position + " water position " + bullet1.transform.localPosition);
 			bullet1.transform.localScale = new Vector3 (1, 1, 15);
 			bullet1.SendMessage("LoadBullet", sendBC);
 		}
