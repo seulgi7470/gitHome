@@ -53,10 +53,10 @@ public class GM : MonoBehaviour {
 		}
 
 		stageNo = PlayMgr.GetInstance().currentStageNo;
-		if(stageNo >= 1)
+/*		if(stageNo >= 1)
 		{
 			PlayMgr.GetInstance().SetOpenUnitList(EnumCharacterType.CHARACTER_TYPE_ELEPHANT);
-		}
+		}*/
 		Debug.Log ("get CurrentStageNo = " + stageNo);
 		stageText.text = (PlayMgr.GetInstance().currentStageNo + 1).ToString("N0");
 		PlayMgr.GetInstance().GetOpenUnitList();
@@ -315,6 +315,7 @@ public class GM : MonoBehaviour {
 			Time.timeScale = 0.0f;
 			break;
 		case EnumGameState.GAME_STATE_SELECTUNIT:
+			PlayMgr.GetInstance().ClearSelectedUnit();
 			startUI.SetActive (true);
 			gameUI.SetActive (false);
 			resultUI.SetActive(false);

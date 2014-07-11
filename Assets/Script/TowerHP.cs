@@ -4,7 +4,7 @@ using System.Collections;
 public class TowerHP : MonoBehaviour {
 
 	public UIFilledSprite delayWidget;
-	public GameObject tower;
+//	public GameObject tower;
 	// Use this for initialization
 	void Start () {
 		delayWidget.fillAmount = 1.0f;

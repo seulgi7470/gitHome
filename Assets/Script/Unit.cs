@@ -16,7 +16,8 @@ public class Unit : MonoBehaviour {
 	public int bulletSpeed; // 불릿의 속도
 	public float hp; // hp
 	public float maxHp;
-
+	public int price;
+	public int plum;
 	//상태
 	bool mbMove = true;
 	bool mbAttackStarted = false;
@@ -46,6 +47,8 @@ public class Unit : MonoBehaviour {
 		range = unitData.range;
 		bulletDelay = unitData.bulletDelay;
 		bulletSpeed = unitData.bulletSpeed;
+		price = unitData.price;
+		plum = unitData.plum;
 	}
 
 	// Update is called once per frame
@@ -211,7 +214,17 @@ public class Unit : MonoBehaviour {
 				GameObject.FindWithTag("GM").SendMessage("GameOver", false);
 				break;
 			case EnumCharacterType.CHARACTER_TYPE_ENEMYTOWER:
+				PlayMgr.GetInstance().plum += plum;
+				GameObject.FindWithTag("plum").SendMessage("RefreshPlum");
 				GameObject.FindWithTag("GM").SendMessage("GameOver", true);
+				break;
+			case EnumCharacterType.CHARACTER_TYPE_ENEMY1:
+				PlayMgr.GetInstance().plum += plum;
+				GameObject.FindWithTag("plum").SendMessage("RefreshPlum");
+				break;
+			case EnumCharacterType.CHARACTER_TYPE_ENEMY2:
+				PlayMgr.GetInstance().plum += plum;
+				GameObject.FindWithTag("plum").SendMessage("RefreshPlum");
 				break;
 			}
 		}

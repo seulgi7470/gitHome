@@ -67,6 +67,7 @@ namespace CommonData
 		public int power;  //파워
 		public int range;  //공격 범위
 		public int price;  //유닛 가격
+		public int plum;   //유닛 오픈할 때 가격
 		public float speed; //유닛 이동 속도 
 		public int bulletSpeed; //불릿 발사 속도
 		public float maxHp; //최대 에너지

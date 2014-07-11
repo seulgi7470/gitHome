@@ -12,6 +12,7 @@ public class PlayMgr {
 	private List<int> mUnitList;
 	private List<int> mOpenUnitList;
 	private int mOpenStage;
+	private int mPlum;
 
 	// 게임 한 판에 쓰이는 변수들
 	private List<int> mSelectedList;
@@ -139,6 +140,10 @@ public class PlayMgr {
 
 	public int openStageNo { get { mOpenStage = PlayerPrefs.GetInt("OpenStageNo");	return mOpenStage; } 
 		set { mOpenStage = value;   PlayerPrefs.SetInt("OpenStageNo", mOpenStage);} }
+
+	
+	public int plum { get { mPlum = PlayerPrefs.GetInt("plum");	return mPlum; } 
+		set { mPlum = value;   PlayerPrefs.SetInt("plum", mPlum);} }
 
 	public void OpenNextStage()
 	{
