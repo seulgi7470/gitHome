@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Sprout : MonoBehaviour {
 
-	public TextMesh sproutText;
+	public UILabel sproutText;
 	// Use this for initialization
 	void Start () {
 	}

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Plum : MonoBehaviour {
 
-	public TextMesh plumText;
+	public UILabel plumText;
 	int mPlum;
 	// Use this for initialization
 	void Start () {

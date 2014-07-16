@@ -4,7 +4,7 @@ using CommonData;
 using System.Collections.Generic;
 
 public class UnitChooser: MonoBehaviour {
-	public int index = 0;
+	public int index;
 	public EnumAliasType aliasType;
 	public EnumCharacterType openCharacterType;
 	public EnumCharacterType characterType;
@@ -22,8 +22,7 @@ public class UnitChooser: MonoBehaviour {
 		RefreshOpenUnitList();
 	/*	mUnitList = PlayMgr.GetInstance().GetUnitList();
 		characterType = (EnumCharacterType)mUnitList[index];
-		if(characterType != EnumCharacterType.CHARACTER_TYPE_NONE)
-			unitdata = DataMgr.GetInstance().GetUnitData(characterType);*/
+		if(characterType != EnumCharacterType.CHARACTER_TYPE_NONE)*/
 	}
 	
 	// Update is called once per frame
@@ -51,24 +50,24 @@ public class UnitChooser: MonoBehaviour {
 				case EnumCharacterType.CHARACTER_TYPE_RAT:
 					unitInfo.SetActive(true);
 					unitInfo.transform.FindChild("UnitInfo_Img")
-						.GetComponentInChildren<UISprite>().spriteName = "쥐";
-					unitInfo.transform.FindChild("UnitPlumText").GetComponent<TextMesh>().text
+						.GetComponentInChildren<UISprite>().spriteName = "unit_rat";
+					unitInfo.transform.FindChild("UnitPlumTxt").GetComponent<UILabel>().text
 						= unitdata.plum.ToString("N0");
 					mbSelected = true;
 					break;
 				case EnumCharacterType.CHARACTER_TYPE_ELEPHANT:
 					unitInfo.SetActive(true);
 					unitInfo.transform.FindChild("UnitInfo_Img")
-						.GetComponentInChildren<UISprite>().spriteName = "코끼리";
-					unitInfo.transform.FindChild("UnitPlumText").GetComponent<TextMesh>().text
+						.GetComponentInChildren<UISprite>().spriteName = "unit_elephant";
+					unitInfo.transform.FindChild("UnitPlumTxt").GetComponent<UILabel>().text
 						= unitdata.plum.ToString("N0");
 					mbSelected = true;
 					break;
 				case EnumCharacterType.CHARACTER_TYPE_HORSE:
 					unitInfo.SetActive(true);
 					unitInfo.transform.FindChild("UnitInfo_Img")
-						.GetComponentInChildren<UISprite>().spriteName = "말";
-					unitInfo.transform.FindChild("UnitPlumText").GetComponent<TextMesh>().text
+						.GetComponentInChildren<UISprite>().spriteName = "unit_horse";
+					unitInfo.transform.FindChild("UnitPlumTxt").GetComponent<UILabel>().text
 						= unitdata.plum.ToString("N0");
 					mbSelected = true;
 					break;
@@ -124,21 +123,21 @@ public class UnitChooser: MonoBehaviour {
 				case EnumCharacterType.CHARACTER_TYPE_RAT:
 					unitInfo.SetActive(true);
 					unitInfo.transform.FindChild("UnitInfo_Img")
-						.GetComponentInChildren<UISprite>().spriteName = "쥐";
+						.GetComponentInChildren<UISprite>().spriteName = "unit_rat";
 					break;
 				case EnumCharacterType.CHARACTER_TYPE_ELEPHANT:
 					unitInfo.gameObject.SetActive(true);
                         unitInfo.transform.FindChild("UnitInfo_Img")
-                            .GetComponentInChildren<UISprite>().spriteName = "코끼리";
+                            .GetComponentInChildren<UISprite>().spriteName = "unit_elephant";
                         break;
                     case EnumCharacterType.CHARACTER_TYPE_HORSE:
                         unitInfo.SetActive(true);
                         unitInfo.transform.FindChild("UnitInfo_Img")
-                            .GetComponentInChildren<UISprite>().spriteName = "말";
+                            .GetComponentInChildren<UISprite>().spriteName = "unit_horse";
                         break;
                 }
                 unitInfo.transform.FindChild("BuyBtn").gameObject.SetActive(false);
-                unitInfo.transform.FindChild("UnitPlumText").gameObject.SetActive(false);
+                unitInfo.transform.FindChild("UnitPlumTxt").gameObject.SetActive(false);
                 mbOpenedSelected = true;
             }
             else // 오픈된 유닛 선택이 취소되었을 때
@@ -159,6 +158,7 @@ public class UnitChooser: MonoBehaviour {
     {
         if(PlayMgr.GetInstance().plum >= unitdata.plum)
         {
+			unitdata = DataMgr.GetInstance().GetUnitData((EnumCharacterType)mUnitList[index]);
             PlayMgr.GetInstance().plum -= unitdata.plum;
             PlayMgr.GetInstance().SetOpenUnitList(characterType);
             RefreshOpenUnitList();

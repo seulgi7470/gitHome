@@ -23,8 +23,8 @@ public class GM : MonoBehaviour {
 	public int[,] enemyList;
 	public int stageNo;
 	public int sproutDelay = 0;
-	public TextMesh stageText;
-
+	public UILabel stageText;
+	 
 	bool mbSpawnChk = true;
 	int mEnemyIndex = 0;
 	int rand;
@@ -133,7 +133,7 @@ public class GM : MonoBehaviour {
 		{
 			unit1.transform.localPosition += new Vector3(unitSpawn.transform.localPosition.x - 5,
                                              unitSpawn.transform.localPosition.y - 5,
-                                             unitSpawn.transform.localPosition.z);
+                                             unitSpawn.transform.localPosition.z - 5);
 		}
 		else if(random == 0)
 		{
@@ -145,13 +145,8 @@ public class GM : MonoBehaviour {
 		{
 			unit1.transform.localPosition += new Vector3(unitSpawn.transform.localPosition.x + 5,
 	                                             unitSpawn.transform.localPosition.y + 5,
-	                                             unitSpawn.transform.localPosition.z);
+                                             	 unitSpawn.transform.localPosition.z + 5);
 		}
-		/*
-
-		unit1.transform.localPosition += new Vector3((Random.Range(-1,1) * 3) + unitSpawn.transform.localPosition.x,
-                                             	(Random.Range(-1,1) * 3) + unitSpawn.transform.localPosition.y,
-		                                             unitSpawn.transform.localPosition.z);*/
 	}
 
 	public void CreateBullet(BulletContext sendBC) 
@@ -220,8 +215,6 @@ public class GM : MonoBehaviour {
 
 	IEnumerator CreateEnemy()
 	{
-
-
 		enemyList =	StageInfo.GetInstance().GetEnemyList();
 		if(mEnemyIndex >= 10)
 			mEnemyIndex = 0;
@@ -243,7 +236,7 @@ public class GM : MonoBehaviour {
 			{
 				unit1.transform.localPosition += new Vector3(enemySpawn.transform.localPosition.x - 5,
 				                                             enemySpawn.transform.localPosition.y - 5,
-				                                             enemySpawn.transform.localPosition.z);
+				                                             enemySpawn.transform.localPosition.z - 5);
 			}
 			else if(random == 0)
 			{
@@ -255,7 +248,7 @@ public class GM : MonoBehaviour {
 			{
 				unit1.transform.localPosition += new Vector3(enemySpawn.transform.localPosition.x + 5,
 				                                             enemySpawn.transform.localPosition.y + 5,
-				                                             enemySpawn.transform.localPosition.z);
+				                                             enemySpawn.transform.localPosition.z + 5);
 			}
 			/*
 			unit1.transform.localPosition += new Vector3((Random.Range(-1,1) * 3) + enemySpawn.transform.localPosition.x,
