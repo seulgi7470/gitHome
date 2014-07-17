@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class UIResult : MonoBehaviour {
-	public TextMesh resultText;
+	public UILabel resultText;
 	public GameObject nextBtn;
 
 	private bool _win = false;

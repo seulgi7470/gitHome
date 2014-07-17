@@ -43,6 +43,15 @@ namespace CommonData
 		GAME_STATE_GAMERESULT
 	};
 
+	public enum EnumBulletType
+	{
+		BULLET_TYPE_NONE = -1,
+		BULLET_TYPE_ONE, // 충돌영역, 이미지 모두 움직임
+		BULLET_TYPE_TWO, // 이미지만 움직임
+		BULLET_TYPE_THREE, // 충돌영역만 움직임
+		BULLET_TYPE_FOUR // 충돌영역, 이미지 모두 안 움직임
+	};
+
 	public struct CharType
 	{
 		public EnumAliasType AliasType;
@@ -58,6 +67,7 @@ namespace CommonData
 		public int range;			// 불릿 사정거리
 		public int speed;			// 불릿의 스피드
 		public Vector3 position;    // 불릿 생성 위치
+		public EnumBulletType bulletType; // 불릿의 타입
 	};
 
 	public struct UnitData

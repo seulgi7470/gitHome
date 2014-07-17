@@ -20,9 +20,6 @@ public class UnitChooser: MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		RefreshOpenUnitList();
-	/*	mUnitList = PlayMgr.GetInstance().GetUnitList();
-		characterType = (EnumCharacterType)mUnitList[index];
-		if(characterType != EnumCharacterType.CHARACTER_TYPE_NONE)*/
 	}
 	
 	// Update is called once per frame
@@ -35,14 +32,26 @@ public class UnitChooser: MonoBehaviour {
 		mUnitList = PlayMgr.GetInstance().GetUnitList();
 		if(mUnitList.Count > 0 && !mbOpened) // 유닛이 열리기 전에
 		{
-			if(mbSelected)
+			if(mbSelected) // 유닛 선택 취소
 			{
 				unitInfo.gameObject.SetActive(false);
 				mbSelected = false;
 			}
-			else{
+			else{ // 유닛 선택
 				characterType =(EnumCharacterType)mUnitList[index];
 				unitdata = DataMgr.GetInstance().GetUnitData(characterType);
+
+				for(int i=1; i< 10; i++)
+				{
+					if(gameObject.transform.parent.FindChild("Choose_"+i).FindChild("UnitInfo") != null)
+					{
+						gameObject.transform.parent.FindChild("Choose_"+i).FindChild("UnitInfo").gameObject.SetActive(false);
+						gameObject.transform.parent.FindChild("Choose_"+i).GetComponent<UnitChooser>().mbSelected = false;
+						gameObject.transform.parent.FindChild("Choose_"+i).GetComponent<UnitChooser>().mbOpenedSelected = false;
+					}
+
+				}
+
 				switch(characterType)
 				{
 				case EnumCharacterType.CHARACTER_TYPE_NONE:
@@ -115,7 +124,17 @@ public class UnitChooser: MonoBehaviour {
 			{
 				gameObject.transform.FindChild("Img_Selected").gameObject.SetActive(true);
 				PlayMgr.GetInstance ().AddSelectedUnit(openCharacterType);
-				
+
+				for(int i=1; i< 10; i++)
+				{
+					if(gameObject.transform.parent.FindChild("Choose_"+i).FindChild("UnitInfo") != null)
+					{
+						gameObject.transform.parent.FindChild("Choose_"+i).FindChild("UnitInfo").gameObject.SetActive(false);
+						gameObject.transform.parent.FindChild("Choose_"+i).GetComponent<UnitChooser>().mbSelected = false;
+						gameObject.transform.parent.FindChild("Choose_"+i).GetComponent<UnitChooser>().mbOpenedSelected = false;
+					}
+				}
+
 				switch(openCharacterType)
 				{
 				case EnumCharacterType.CHARACTER_TYPE_NONE:
@@ -149,9 +168,6 @@ public class UnitChooser: MonoBehaviour {
             }
         }
         RefreshUnitList();
-        
-        Debug.Log ("index = " + index + " mbSelected(notOpen) = " + mbSelected + " mbOpenedSelected(Open) = "
-                   + mbOpenedSelected);
     }
     
     public void BuyUnit(GameObject gameObj)

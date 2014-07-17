@@ -115,7 +115,7 @@ public class DataMgr {
 			unitData.maxHp = 300;
 			unitData.speed = 1;
 			unitData.power = 50;
-			unitData.range = 300;
+			unitData.range = 150;
 			unitData.bulletDelay = 1;
 			unitData.bulletSpeed = 2;
 			unitData.price = 50;

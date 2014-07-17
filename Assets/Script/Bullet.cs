@@ -10,6 +10,7 @@ public class Bullet : MonoBehaviour {
 	public int bulletRange;
 	public EnumAliasType bulletAliasType;
 	public EnumCharacterType bulletUnitType;
+	public EnumBulletType bulletType;
 	public Vector3 startPosition;
 
 	bool mbDied;
@@ -24,8 +25,8 @@ public class Bullet : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//gameObject.rigidbody.AddForce (bulletSpeed, 0, 0);
-		gameObject.transform.Translate(bulletSpeed*0.01f, 0, 0);
-		if(bulletUnitType == EnumCharacterType.CHARACTER_TYPE_ELEPHANT)
+
+		if(bulletType == EnumBulletType.BULLET_TYPE_THREE)
 		{
 			if(mSpriteAnim)
 			{
@@ -33,6 +34,22 @@ public class Bullet : MonoBehaviour {
 				mSpriteAnim.namePrefix = "bullet";
 				mSpriteAnim.isLoop = false;
 			}
+			// bullet type에 따라 위치 옮기기
+			if(gameObject.transform.FindChild("WaterCollider").localPosition.x < 90)
+			{
+				Vector3 temp = gameObject.transform.FindChild("WaterCollider").localPosition;
+				temp.x += 10;
+				gameObject.transform.FindChild("WaterCollider").localPosition = temp;
+			}
+			if(gameObject.transform.FindChild("WaterCollider").localPosition.y > -50)
+			{
+				Vector3 temp = gameObject.transform.FindChild("WaterCollider").localPosition;
+				temp.y -= 6;
+                gameObject.transform.FindChild("WaterCollider").localPosition = temp;
+            }
+		}
+		else{
+			gameObject.transform.Translate(bulletSpeed*0.01f, 0, 0);
 		}
 
 
@@ -42,27 +59,16 @@ public class Bullet : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter(Collider coll) {
+	public void ChildrenCollision(Collider coll) {
 		if (mbDied)
 			return;
 
-		if(bulletUnitType == EnumCharacterType.CHARACTER_TYPE_ELEPHANT) // 여러마리 동시 공격 
-		{
-			if(coll.transform.tag == "enemy")
-			{
-				Debug.Log("Damage " + bulletPower);
-				bHit = true;
-			}
-		}
-		else
-		{
-			bHit = false;
-			if (bulletAliasType == EnumAliasType.ALIAS_TYPE_ANIMAL && coll.transform.tag == "enemy") {		
-				bHit = true;
-			} 
-			if (bulletAliasType == EnumAliasType.ALIAS_TYPE_HUMAN && coll.transform.tag == "unit") {
-				bHit = true;
-			}
+		bHit = false;
+		if (bulletAliasType == EnumAliasType.ALIAS_TYPE_ANIMAL && coll.transform.tag == "enemy") {		
+			bHit = true;
+		} 
+		if (bulletAliasType == EnumAliasType.ALIAS_TYPE_HUMAN && coll.transform.tag == "unit") {
+			bHit = true;
 		}
 
 		if(bHit)
@@ -80,6 +86,7 @@ public class Bullet : MonoBehaviour {
 		bulletAliasType = sendBC.aliasType;
 		bulletUnitType = sendBC.unitType;
 		startPosition = sendBC.position;
+		bulletType = sendBC.bulletType;
 	}
 
 	void OnAnimationEnd()  

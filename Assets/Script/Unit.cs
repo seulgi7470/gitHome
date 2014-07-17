@@ -7,7 +7,8 @@ public class Unit : MonoBehaviour {
 	//DATA
 	public EnumAliasType aliasType;
 	public EnumCharacterType characterType;
-	
+	public EnumBulletType bulletType;
+
 	public int bulletDelay;
 	public int power;
 	public int range;
@@ -18,6 +19,7 @@ public class Unit : MonoBehaviour {
 	public float maxHp;
 	public int price;
 	public int plum;
+
 	//상태
 	bool mbMove = true;
 	bool mbAttackStarted = false;
@@ -139,6 +141,14 @@ public class Unit : MonoBehaviour {
 		sendBC.damage = power;
 		sendBC.speed = bulletSpeed;
 		sendBC.position = gameObject.transform.localPosition;
+		if(characterType == EnumCharacterType.CHARACTER_TYPE_ELEPHANT)
+		{
+			sendBC.bulletType = EnumBulletType.BULLET_TYPE_THREE;
+		}
+		else
+		{
+			sendBC.bulletType = EnumBulletType.BULLET_TYPE_ONE;
+		}
 		GameObject.FindWithTag ("GM").SendMessage ("CreateBullet", sendBC);
 
 	}
