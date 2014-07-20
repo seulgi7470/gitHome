@@ -64,11 +64,15 @@ public class Bullet : MonoBehaviour {
 			return;
 
 		bHit = false;
-		if (bulletAliasType == EnumAliasType.ALIAS_TYPE_ANIMAL && coll.transform.tag == "enemy") {		
-			bHit = true;
-		} 
-		if (bulletAliasType == EnumAliasType.ALIAS_TYPE_HUMAN && coll.transform.tag == "unit") {
-			bHit = true;
+
+		if(bulletType != EnumBulletType.BULLET_TYPE_THREE)
+		{
+			if (bulletAliasType == EnumAliasType.ALIAS_TYPE_ANIMAL && coll.transform.tag == "enemy") {		
+				bHit = true;
+			} 
+			if (bulletAliasType == EnumAliasType.ALIAS_TYPE_HUMAN && coll.transform.tag == "unit") {
+				bHit = true;
+			}
 		}
 
 		if(bHit)
@@ -94,5 +98,7 @@ public class Bullet : MonoBehaviour {
 		if (mbDied) {
 			return;
 		}
+		Destroy (gameObject);
+		mbDied = true;
 	}
 }

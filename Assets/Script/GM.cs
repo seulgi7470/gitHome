@@ -134,6 +134,8 @@ public class GM : MonoBehaviour {
 			unit1.transform.localPosition += new Vector3(unitSpawn.transform.localPosition.x - 5,
                                              unitSpawn.transform.localPosition.y - 5,
                                              unitSpawn.transform.localPosition.z - 5);
+
+
 		}
 		else if(random == 0)
 		{
@@ -147,6 +149,13 @@ public class GM : MonoBehaviour {
 	                                             unitSpawn.transform.localPosition.y + 5,
                                              	 unitSpawn.transform.localPosition.z + 5);
 		}
+
+		UISprite sprite = unit1.GetComponentInChildren<UISprite>();
+		if(sprite)
+		{
+			sprite.depth -= random; 
+		}
+
 	}
 
 	public void CreateBullet(BulletContext sendBC) 
@@ -362,7 +371,7 @@ public class GM : MonoBehaviour {
 		else
 		{
 			ChangeUItoState(EnumGameState.GAME_STATE_PLAYGAME);
-			PlayMgr.GetInstance().sproutValue = 0;
+			PlayMgr.GetInstance().sproutValue = 120;
 			StartCoroutine (CreateEnemy ());
 		}
 	}
