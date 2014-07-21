@@ -83,6 +83,9 @@ namespace CommonData
 		public float maxHp; //최대 에너지
 	};
 
-
-
+	public static class Depth
+	{	
+		public const int MIN_UNIT_DEPTH = 0;
+		public const int MIN_BULLET_DEPTH = 10;
+	};
 };

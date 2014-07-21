@@ -108,7 +108,7 @@ public class GM : MonoBehaviour {
 
 		UISprite sprite = unit.GetComponentInChildren<UISprite>();
 		if(sprite){
-			sprite.depth -= random; 
+			sprite.depth = Depth.MIN_UNIT_DEPTH - random; 
 		}
 
 	}
@@ -124,7 +124,7 @@ public class GM : MonoBehaviour {
 			bullet1.transform.parent = bulletObjPool;
 			bullet1.transform.localPosition = new Vector3(sendBC.position.x,
 			            						sendBC.position.y + 48.0f,
-			           							sendBC.position.z);
+			           							0);
 	//		Debug.Log ("sendBC position " + sendBC.position + " arrow position " + bullet1.transform.localPosition);
 
 			bullet1.transform.localScale = new Vector3 (1, 1, 15);
@@ -138,7 +138,7 @@ public class GM : MonoBehaviour {
 		
 			bullet1.transform.localPosition = new Vector3(sendBC.position.x + 115.0f,
 				                                              sendBC.position.y + 90.0f,
-				                                              sendBC.position.z);
+				                                              0);
 
 	//		Debug.Log ("sendBC position " + sendBC.position + " water position " + bullet1.transform.localPosition);
 			bullet1.transform.localScale = new Vector3 (1, 1, 15);
@@ -149,11 +149,17 @@ public class GM : MonoBehaviour {
 			bullet1 = Instantiate
 				(Resources.Load ("prefabs/Bullet"), Vector3.zero, Quaternion.identity) as GameObject;
 			bullet1.transform.parent = bulletObjPool;
-			bullet1.transform.localPosition = sendBC.position;
+			bullet1.transform.localPosition= new Vector3(sendBC.position.x,
+			                                             sendBC.position.y,
+			                                             0);
 			bullet1.transform.localScale = new Vector3 (1, 1, 15);
 			bullet1.SendMessage("LoadBullet", sendBC);
 		}
 
+		UISprite sprite = bullet1.GetComponentInChildren<UISprite>();
+		if(sprite){
+			sprite.depth = Depth.MIN_BULLET_DEPTH; 
+		}
 	}
 
 	IEnumerator CreateEnemy()
