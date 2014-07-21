@@ -116,7 +116,7 @@ public class GM : MonoBehaviour {
 	public void CreateBullet(BulletContext sendBC) 
 	{
 		//여기에 if문 쓰지말고 BulletContext로 처리하기!!
-		var bullet1;
+		GameObject bullet1 = null;
 		if(sendBC.unitType == EnumCharacterType.CHARACTER_TYPE_ENEMY2)
 		{
 			bullet1 = Instantiate
