@@ -57,6 +57,10 @@ public class UnitButton : MonoBehaviour {
 				spriteName = "btn_unit_elephant";
 				child.transform.localScale = new Vector3(138,144,1);
 			break;
+		case EnumCharacterType.CHARACTER_TYPE_ALPACA:
+			spriteName = "btn_unit_alpaca";
+			child.transform.localScale = new Vector3(138,144,1);
+			break;
 		}
 
 		if (child != null) {

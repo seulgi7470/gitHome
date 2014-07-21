@@ -140,14 +140,37 @@ public class Unit : MonoBehaviour {
 		sendBC.range = range + 100;
 		sendBC.damage = power;
 		sendBC.speed = bulletSpeed;
-		sendBC.position = gameObject.transform.localPosition;
 		if(characterType == EnumCharacterType.CHARACTER_TYPE_ELEPHANT)
 		{
 			sendBC.bulletType = EnumBulletType.BULLET_TYPE_THREE;
+			sendBC.position = new Vector3(gameObject.transform.localPosition.x + 130.0f,
+			                              gameObject.transform.localPosition.y + 90.0f,
+			                              0);
+			sendBC.prefab = "Prefabs/Water";
+		}
+		else if(characterType == EnumCharacterType.CHARACTER_TYPE_ALPACA)
+		{
+			sendBC.bulletType = EnumBulletType.BULLET_TYPE_ONE;
+			sendBC.position = new Vector3(gameObject.transform.localPosition.x + 85.0f,
+			                              gameObject.transform.localPosition.y + 105.0f,
+			                              0);
+			sendBC.prefab = "Prefabs/Saliva";
+		}
+		else if(characterType == EnumCharacterType.CHARACTER_TYPE_ENEMY2)
+		{
+			sendBC.bulletType = EnumBulletType.BULLET_TYPE_ONE;
+			sendBC.position = new Vector3(gameObject.transform.localPosition.x,
+			                              gameObject.transform.localPosition.y + 48.0f,
+		                                  0);
+			sendBC.prefab = "Prefabs/Arrow";
 		}
 		else
 		{
 			sendBC.bulletType = EnumBulletType.BULLET_TYPE_ONE;
+			sendBC.position = new Vector3(gameObject.transform.localPosition.x,
+			                              gameObject.transform.localPosition.y + 30.0f,
+			                              0);
+			sendBC.prefab = "Prefabs/Bullet";
 		}
 		GameObject.FindWithTag ("GM").SendMessage ("CreateBullet", sendBC);
 

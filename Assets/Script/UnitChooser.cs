@@ -17,6 +17,7 @@ public class UnitChooser: MonoBehaviour {
 	
 	bool mbOpened = false;
 	UnitData unitdata;
+	int mPlum;
 	// Use this for initialization
 	void Start () {
 		RefreshOpenUnitList();
@@ -80,6 +81,14 @@ public class UnitChooser: MonoBehaviour {
 						= unitdata.plum.ToString("N0");
 					mbSelected = true;
 					break;
+				case EnumCharacterType.CHARACTER_TYPE_ALPACA:
+					unitInfo.SetActive(true);
+					unitInfo.transform.FindChild("UnitInfo_Img")
+						.GetComponentInChildren<UISprite>().spriteName = "unit_alpaca";
+					unitInfo.transform.FindChild("UnitPlumTxt").GetComponent<UILabel>().text
+						= unitdata.plum.ToString("N0");
+					mbSelected = true;
+					break;
 				}
 			}
 		}
@@ -112,6 +121,10 @@ public class UnitChooser: MonoBehaviour {
 				gameObject.GetComponentInChildren<UISprite>().spriteName = "btn_unit_horse";
 				mbOpened = true;
 				break;
+			case EnumCharacterType.CHARACTER_TYPE_ALPACA:
+				gameObject.GetComponentInChildren<UISprite>().spriteName = "btn_unit_alpaca";
+				mbOpened = true;
+				break;
 			}
 		}
 	}
@@ -120,6 +133,8 @@ public class UnitChooser: MonoBehaviour {
 	{
 		if(mbOpened)
 		{
+			if(gameObject.transform.FindChild("Img_Selected").gameObject.activeSelf)
+				mbOpenedSelected = true;
 			if(!mbOpenedSelected) // 오픈된 유닛이 선택되었을 때
 			{
 				gameObject.transform.FindChild("Img_Selected").gameObject.SetActive(true);
@@ -146,21 +161,36 @@ public class UnitChooser: MonoBehaviour {
 					break;
 				case EnumCharacterType.CHARACTER_TYPE_ELEPHANT:
 					unitInfo.gameObject.SetActive(true);
-                        unitInfo.transform.FindChild("UnitInfo_Img")
-                            .GetComponentInChildren<UISprite>().spriteName = "unit_elephant";
-                        break;
-                    case EnumCharacterType.CHARACTER_TYPE_HORSE:
-                        unitInfo.SetActive(true);
-                        unitInfo.transform.FindChild("UnitInfo_Img")
-                            .GetComponentInChildren<UISprite>().spriteName = "unit_horse";
-                        break;
+					unitInfo.transform.FindChild("UnitInfo_Img")
+                         .GetComponentInChildren<UISprite>().spriteName = "unit_elephant";
+               		break;
+            	case EnumCharacterType.CHARACTER_TYPE_HORSE:
+					unitInfo.SetActive(true);
+					unitInfo.transform.FindChild("UnitInfo_Img")
+						.GetComponentInChildren<UISprite>().spriteName = "unit_horse";
+        			break;
+				case EnumCharacterType.CHARACTER_TYPE_ALPACA:
+					unitInfo.SetActive(true);
+					unitInfo.transform.FindChild("UnitInfo_Img")
+						.GetComponentInChildren<UISprite>().spriteName = "unit_alpaca";
+					break;
                 }
                 unitInfo.transform.FindChild("BuyBtn").gameObject.SetActive(false);
                 unitInfo.transform.FindChild("UnitPlumTxt").gameObject.SetActive(false);
                 mbOpenedSelected = true;
             }
             else // 오픈된 유닛 선택이 취소되었을 때
-            {
+			{
+				for(int i=1; i< 10; i++)
+				{
+					if(gameObject.transform.parent.FindChild("Choose_"+i).FindChild("UnitInfo") != null)
+					{
+						gameObject.transform.parent.FindChild("Choose_"+i).FindChild("UnitInfo").gameObject.SetActive(false);
+						gameObject.transform.parent.FindChild("Choose_"+i).GetComponent<UnitChooser>().mbSelected = false;
+						gameObject.transform.parent.FindChild("Choose_"+i).GetComponent<UnitChooser>().mbOpenedSelected = false;
+					}
+				}
+
                 PlayMgr.GetInstance().RemoveSelectedUnit(openCharacterType);
                 gameObject.transform.FindChild("Img_Selected").gameObject.SetActive(false);
                 unitInfo.SetActive(false);
@@ -168,19 +198,25 @@ public class UnitChooser: MonoBehaviour {
             }
         }
         RefreshUnitList();
-    }
+	}	
     
     public void BuyUnit(GameObject gameObj)
     {
-        if(PlayMgr.GetInstance().plum >= unitdata.plum)
-        {
-			unitdata = DataMgr.GetInstance().GetUnitData((EnumCharacterType)mUnitList[index]);
-            PlayMgr.GetInstance().plum -= unitdata.plum;
-            PlayMgr.GetInstance().SetOpenUnitList(characterType);
-            RefreshOpenUnitList();
-            RefreshUnitList();
-            GameObject.FindWithTag ("plum").SendMessage("RefreshPlum");
-            mbSelected = false;
-        }
+		characterType =(EnumCharacterType)mUnitList[index];
+		unitdata = DataMgr.GetInstance().GetUnitData(characterType);
+
+		if((EnumCharacterType)mOpenUnitList[index-1] != EnumCharacterType.CHARACTER_TYPE_NONE && index >= 1)
+		{
+				mPlum = unitdata.plum;
+	        if(PlayMgr.GetInstance().plum >= mPlum)
+	        {
+	            PlayMgr.GetInstance().plum -= mPlum;
+	            PlayMgr.GetInstance().SetOpenUnitList(characterType);
+	            RefreshOpenUnitList();
+	            RefreshUnitList();
+	            GameObject.FindWithTag ("plum").SendMessage("RefreshPlum");
+	            mbSelected = false;
+	        }
+		}
     }
 }

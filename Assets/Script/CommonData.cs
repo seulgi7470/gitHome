@@ -18,8 +18,8 @@ namespace CommonData
 		CHARACTER_TYPE_ENEMYTOWER,
 		CHARACTER_TYPE_RAT,
 		CHARACTER_TYPE_HORSE,
-		CHARACTER_TYPE_RAT1,
 		CHARACTER_TYPE_ELEPHANT,
+		CHARACTER_TYPE_ALPACA,
 		CHARACTER_TYPE_ENEMY1,
 		CHARACTER_TYPE_ENEMY2,
 		CHARACTER_TYPE_MAX,
@@ -68,6 +68,7 @@ namespace CommonData
 		public int speed;			// 불릿의 스피드
 		public Vector3 position;    // 불릿 생성 위치
 		public EnumBulletType bulletType; // 불릿의 타입
+		public string prefab;		// 불릿의 프리팹 이름
 	};
 
 	public struct UnitData
@@ -83,6 +84,10 @@ namespace CommonData
 		public float maxHp; //최대 에너지
 	};
 
-
-
+	public static class Depth
+	{	
+		public const int MIN_UNIT_DEPTH = 0;
+		public const int MIN_ENEMY_DEPTH = 0;
+		public const int MIN_BULLET_DEPTH = 10;
+	};
 };

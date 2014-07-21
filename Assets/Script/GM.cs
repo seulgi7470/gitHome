@@ -53,10 +53,7 @@ public class GM : MonoBehaviour {
 		}
 
 		stageNo = PlayMgr.GetInstance().currentStageNo;
-/*		if(stageNo >= 1)
-		{
-			PlayMgr.GetInstance().SetOpenUnitList(EnumCharacterType.CHARACTER_TYPE_ELEPHANT);
-		}*/
+
 		Debug.Log ("get CurrentStageNo = " + stageNo);
 		stageText.text = (PlayMgr.GetInstance().currentStageNo + 1).ToString("N0");
 		PlayMgr.GetInstance().GetOpenUnitList();
@@ -94,66 +91,36 @@ public class GM : MonoBehaviour {
 		var unit = Instantiate
 			(Resources.Load(GetUnitPrefabPath(charType)), Vector3.zero, Quaternion.identity) as GameObject;
 		unit.transform.parent = unitObjPool;
-	
-
 		unit.transform.localScale = new Vector3 (1, 1, 1);
-		
 
-		int random = Random.Range (-1,1);
+		int random = Random.Range (-1,2);
 		float randomOffset = random * 5;
 
 		unit.transform.localPosition += new Vector3(unitSpawn.transform.localPosition.x + randomOffset,
-		                                             unitSpawn.transform.localPosition.y + randomOffset,
-		                                             unitSpawn.transform.localPosition.z + randomOffset);
+		                                            unitSpawn.transform.localPosition.y + randomOffset,
+		                                            unitSpawn.transform.localPosition.z + randomOffset);
 
 		UISprite sprite = unit.GetComponentInChildren<UISprite>();
 		if(sprite){
-			sprite.depth -= random; 
+			sprite.depth = Depth.MIN_UNIT_DEPTH - random; 
 		}
-
 	}
 
 	public void CreateBullet(BulletContext sendBC) 
 	{
-		//여기에 if문 쓰지말고 BulletContext로 처리하기!!
-		GameObject bullet1 = null;
-		if(sendBC.unitType == EnumCharacterType.CHARACTER_TYPE_ENEMY2)
-		{
-			bullet1 = Instantiate
-				(Resources.Load ("Prefabs/Arrow"), Vector3.zero, Quaternion.identity) as GameObject;
-			bullet1.transform.parent = bulletObjPool;
-			bullet1.transform.localPosition = new Vector3(sendBC.position.x,
-			            						sendBC.position.y + 48.0f,
-			           							sendBC.position.z);
-	//		Debug.Log ("sendBC position " + sendBC.position + " arrow position " + bullet1.transform.localPosition);
+		var bullet1 = Instantiate
+			(Resources.Load (sendBC.prefab), Vector3.zero, Quaternion.identity) as GameObject;
+		bullet1.transform.parent = bulletObjPool;
+		bullet1.transform.localPosition= new Vector3(sendBC.position.x,
+		                                             sendBC.position.y,
+		                                             0);
+		bullet1.transform.localScale = new Vector3 (1, 1, 15);
+		bullet1.SendMessage("LoadBullet", sendBC);
 
-			bullet1.transform.localScale = new Vector3 (1, 1, 15);
-			bullet1.SendMessage("LoadBullet", sendBC);
-        }
-		else if(sendBC.unitType == EnumCharacterType.CHARACTER_TYPE_ELEPHANT)
-		{
-			bullet1 = Instantiate
-				(Resources.Load ("Prefabs/Water"), Vector3.zero, Quaternion.identity) as GameObject;
-			bullet1.transform.parent = bulletObjPool;
-		
-			bullet1.transform.localPosition = new Vector3(sendBC.position.x + 115.0f,
-				                                              sendBC.position.y + 90.0f,
-				                                              sendBC.position.z);
-
-	//		Debug.Log ("sendBC position " + sendBC.position + " water position " + bullet1.transform.localPosition);
-			bullet1.transform.localScale = new Vector3 (1, 1, 15);
-			bullet1.SendMessage("LoadBullet", sendBC);
+		UISprite sprite = bullet1.GetComponentInChildren<UISprite>();
+		if(sprite){
+			sprite.depth = Depth.MIN_BULLET_DEPTH; 
 		}
-		else
-		{
-			bullet1 = Instantiate
-				(Resources.Load ("prefabs/Bullet"), Vector3.zero, Quaternion.identity) as GameObject;
-			bullet1.transform.parent = bulletObjPool;
-			bullet1.transform.localPosition = sendBC.position;
-			bullet1.transform.localScale = new Vector3 (1, 1, 15);
-			bullet1.SendMessage("LoadBullet", sendBC);
-		}
-
 	}
 
 	IEnumerator CreateEnemy()
@@ -173,31 +140,18 @@ public class GM : MonoBehaviour {
 				(Resources.Load(GetUnitPrefabPath(charType)), Vector3.zero, Quaternion.identity) as GameObject;
 			unit1.transform.parent = enemyObjPool;
 			unit1.transform.localScale = new Vector3 (1, 1, 1);
-		
-			int random = Random.Range (-1,2);
-			if(random == -1)
-			{
-				unit1.transform.localPosition += new Vector3(enemySpawn.transform.localPosition.x - 5,
-				                                             enemySpawn.transform.localPosition.y - 5,
-				                                             enemySpawn.transform.localPosition.z - 5);
-			}
-			else if(random == 0)
-			{
-				unit1.transform.localPosition += new Vector3(enemySpawn.transform.localPosition.x,
-				                                             enemySpawn.transform.localPosition.y,
-				                                             enemySpawn.transform.localPosition.z);
-			}
-			else
-			{
-				unit1.transform.localPosition += new Vector3(enemySpawn.transform.localPosition.x + 5,
-				                                             enemySpawn.transform.localPosition.y + 5,
-				                                             enemySpawn.transform.localPosition.z + 5);
-			}
-			/*
-			unit1.transform.localPosition += new Vector3((Random.Range(-1,1) * 3) + enemySpawn.transform.localPosition.x,
-	                                             (Random.Range(-1,1) * 3) + enemySpawn.transform.localPosition.y,
-	                                             enemySpawn.transform.localPosition.z); */
 
+			int random = Random.Range (-1,2);
+			float randomOffset = random * 5;
+
+			unit1.transform.localPosition += new Vector3(enemySpawn.transform.localPosition.x + randomOffset,
+			                                             enemySpawn.transform.localPosition.y + randomOffset,
+			                                             enemySpawn.transform.localPosition.z + randomOffset);
+
+			UISprite sprite = unit1.GetComponentInChildren<UISprite>();
+			if(sprite){
+				sprite.depth = Depth.MIN_ENEMY_DEPTH - random; 
+			}
 		}
 			
 		mEnemyIndex++;
@@ -216,11 +170,11 @@ public class GM : MonoBehaviour {
 		case EnumCharacterType.CHARACTER_TYPE_HORSE:
 			strPath += "Horse";
 			break;
-		case EnumCharacterType.CHARACTER_TYPE_RAT1:
-			strPath += "Rat1";
-			break;
 		case EnumCharacterType.CHARACTER_TYPE_ELEPHANT:
 			strPath += "Elephant";
+			break;
+		case EnumCharacterType.CHARACTER_TYPE_ALPACA:
+			strPath += "Alpaca";
 			break;
 		case EnumCharacterType.CHARACTER_TYPE_ENEMY1:
 			strPath += "Enemy1";

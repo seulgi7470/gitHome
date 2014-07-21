@@ -16,8 +16,8 @@ public class StartScene : MonoBehaviour {
 
 	void StartGame() {
 		PlayMgr.GetInstance().currentStageNo = 0;
-		PlayMgr.GetInstance().openStageNo = 0;
-		PlayMgr.GetInstance().plum = 300005;
+//		PlayMgr.GetInstance().openStageNo = 0;
+//		PlayMgr.GetInstance().plum = 0;
 		PlayMgr.GetInstance().SetOpenUnitList(EnumCharacterType.CHARACTER_TYPE_RAT);
 //		Debug.Log ("set stage No = " + PlayMgr.GetInstance().stageNo);
 		Application.LoadLevel("selectstage");

@@ -17,7 +17,6 @@ public class Bullet : MonoBehaviour {
 	bool bHit = false;
 	SPSpriteAnimation mSpriteAnim;
 
-	
 	void Start (){
 		mbDied = false;
 	}
