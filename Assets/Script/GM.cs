@@ -115,9 +115,11 @@ public class GM : MonoBehaviour {
 
 	public void CreateBullet(BulletContext sendBC) 
 	{
+		//여기에 if문 쓰지말고 BulletContext로 처리하기!!
+		var bullet1;
 		if(sendBC.unitType == EnumCharacterType.CHARACTER_TYPE_ENEMY2)
 		{
-			var bullet1 = Instantiate
+			bullet1 = Instantiate
 				(Resources.Load ("Prefabs/Arrow"), Vector3.zero, Quaternion.identity) as GameObject;
 			bullet1.transform.parent = bulletObjPool;
 			bullet1.transform.localPosition = new Vector3(sendBC.position.x,
@@ -130,44 +132,21 @@ public class GM : MonoBehaviour {
         }
 		else if(sendBC.unitType == EnumCharacterType.CHARACTER_TYPE_ELEPHANT)
 		{
-			var bullet1 = Instantiate
+			bullet1 = Instantiate
 				(Resources.Load ("Prefabs/Water"), Vector3.zero, Quaternion.identity) as GameObject;
 			bullet1.transform.parent = bulletObjPool;
-			if(rand % 2 == 1)
-			{
-				bullet1.transform.localPosition = new Vector3(sendBC.position.x + 115.0f,
+		
+			bullet1.transform.localPosition = new Vector3(sendBC.position.x + 115.0f,
 				                                              sendBC.position.y + 90.0f,
 				                                              sendBC.position.z);
-			}
-			else
-			{
-				if(rand >= 0 && rand < 50)
-				{
-					bullet1.transform.localPosition = new Vector3(sendBC.position.x + (115.0f * 1.2f),
-					                                              sendBC.position.y + (90.0f * 1.2f),
-					                                              sendBC.position.z);
-				}
-				else if(rand >= 60 && rand < 100)
-				{
-					bullet1.transform.localPosition = new Vector3(sendBC.position.x + (115.0f * 1.5f),
-					                                              sendBC.position.y + (90.0f * 1.5f),
-					                                              sendBC.position.z);
-				}
-				else
-				{
-					bullet1.transform.localPosition = new Vector3(sendBC.position.x + (115.0f * 2.0f),
-					                                              sendBC.position.y + (90.0f * 2.0f),
-					                                              sendBC.position.z);
-				}
-			}
-			
+
 	//		Debug.Log ("sendBC position " + sendBC.position + " water position " + bullet1.transform.localPosition);
 			bullet1.transform.localScale = new Vector3 (1, 1, 15);
 			bullet1.SendMessage("LoadBullet", sendBC);
 		}
 		else
 		{
-			var bullet1 = Instantiate
+			bullet1 = Instantiate
 				(Resources.Load ("prefabs/Bullet"), Vector3.zero, Quaternion.identity) as GameObject;
 			bullet1.transform.parent = bulletObjPool;
 			bullet1.transform.localPosition = sendBC.position;
