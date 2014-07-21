@@ -65,21 +65,25 @@ public class Bullet : MonoBehaviour {
 
 		bHit = false;
 
-		if(bulletType != EnumBulletType.BULLET_TYPE_THREE)
-		{
-			if (bulletAliasType == EnumAliasType.ALIAS_TYPE_ANIMAL && coll.transform.tag == "enemy") {		
-				bHit = true;
-			} 
-			if (bulletAliasType == EnumAliasType.ALIAS_TYPE_HUMAN && coll.transform.tag == "unit") {
-				bHit = true;
-			}
+		if (bulletAliasType == EnumAliasType.ALIAS_TYPE_ANIMAL && coll.transform.tag == "enemy") {		
+			bHit = true;
+		} 
+		if (bulletAliasType == EnumAliasType.ALIAS_TYPE_HUMAN && coll.transform.tag == "unit") {
+			bHit = true;
 		}
-
+		
 		if(bHit)
 		{
 			coll.GetComponent<Unit> ().Damage (bulletPower);
-			Destroy (gameObject);
-			mbDied = true;
+			switch( bulletType )
+			{
+			case EnumBulletType.BULLET_TYPE_THREE:
+				break;
+			default:
+				Destroy (gameObject);
+				mbDied = true;
+				break;
+			}
 		}
 	}
 

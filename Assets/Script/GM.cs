@@ -91,68 +91,23 @@ public class GM : MonoBehaviour {
 
 	public void CreateUnit(EnumCharacterType charType)
 	{
-		var unit1 = Instantiate
+		var unit = Instantiate
 			(Resources.Load(GetUnitPrefabPath(charType)), Vector3.zero, Quaternion.identity) as GameObject;
-		unit1.transform.parent = unitObjPool;
+		unit.transform.parent = unitObjPool;
 	
-		if(charType == EnumCharacterType.CHARACTER_TYPE_ELEPHANT)
-		{
-			UnitData unitdata = DataMgr.GetInstance().GetUnitData(charType);
-			// 백개의 랜덤 홀수는 1배 짝수중 0 <= x < 50 은 1.5배 60 <= x < 99 은 2배 50 <= x < 60 은 3배
-			rand = Random.Range(0,100); 
-			if(rand % 2 == 1)
-			{
-				unit1.transform.localScale = new Vector3(1,1,1);
-			}
-			else
-			{
-				if(rand >= 0 && rand < 50)
-				{
-					unit1.transform.localScale = new Vector3(1.2f,1.2f,1.2f);
-					unitdata.maxHp *= 1.2f;
-				}
-				else if(rand >= 60 && rand < 100)
-				{
-					unit1.transform.localScale = new Vector3(1.5f,1.5f,1.5f);
-					unitdata.maxHp *= 1.5f;
-				}
-				else
-				{
-					unit1.transform.localScale = new Vector3(2,2,2);
-					unitdata.maxHp *= 2;
-				}
-			}
-		}
-		else
-		{
-			unit1.transform.localScale = new Vector3 (1, 1, 1);
-		}
 
-		int random = Random.Range (-1,2);
-		if(random == -1)
-		{
-			unit1.transform.localPosition += new Vector3(unitSpawn.transform.localPosition.x - 5,
-                                             unitSpawn.transform.localPosition.y - 5,
-                                             unitSpawn.transform.localPosition.z - 5);
+		unit.transform.localScale = new Vector3 (1, 1, 1);
+		
 
+		int random = Random.Range (-1,1);
+		float randomOffset = random * 5;
 
-		}
-		else if(random == 0)
-		{
-			unit1.transform.localPosition += new Vector3(unitSpawn.transform.localPosition.x,
-	                                             unitSpawn.transform.localPosition.y,
-	                                             unitSpawn.transform.localPosition.z);
-		}
-		else
-		{
-			unit1.transform.localPosition += new Vector3(unitSpawn.transform.localPosition.x + 5,
-	                                             unitSpawn.transform.localPosition.y + 5,
-                                             	 unitSpawn.transform.localPosition.z + 5);
-		}
+		unit.transform.localPosition += new Vector3(unitSpawn.transform.localPosition.x + randomOffset,
+		                                             unitSpawn.transform.localPosition.y + randomOffset,
+		                                             unitSpawn.transform.localPosition.z + randomOffset);
 
-		UISprite sprite = unit1.GetComponentInChildren<UISprite>();
-		if(sprite)
-		{
+		UISprite sprite = unit.GetComponentInChildren<UISprite>();
+		if(sprite){
 			sprite.depth -= random; 
 		}
 
