@@ -205,7 +205,7 @@ public class UnitChooser: MonoBehaviour {
 		characterType =(EnumCharacterType)mUnitList[index];
 		unitdata = DataMgr.GetInstance().GetUnitData(characterType);
 
-		if((EnumCharacterType)mOpenUnitList[index-1] != EnumCharacterType.CHARACTER_TYPE_NONE && index >= 1)
+		if(index == 0 ||(EnumCharacterType)mOpenUnitList[index-1] != EnumCharacterType.CHARACTER_TYPE_NONE )
 		{
 				mPlum = unitdata.plum;
 	        if(PlayMgr.GetInstance().plum >= mPlum)

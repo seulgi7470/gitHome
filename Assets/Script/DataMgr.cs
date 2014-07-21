@@ -59,7 +59,7 @@ public class DataMgr {
 			unitData.bulletDelay = 0;
 			unitData.bulletSpeed = 0;
 			unitData.price = 0;
-			unitData.plum = 200;
+			unitData.plum = 300;
 			unitData.unitDelay = 0;
 			mUnitData.Add(unitData);
 		}while(false);

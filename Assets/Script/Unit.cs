@@ -244,20 +244,20 @@ public class Unit : MonoBehaviour {
 			switch (characterType)
 			{
 			case EnumCharacterType.CHARACTER_TYPE_UNITTOWER:
+				GameObject.FindWithTag("plum").SendMessage("SavePlum");
 				GameObject.FindWithTag("GM").SendMessage("GameOver", false);
 				break;
 			case EnumCharacterType.CHARACTER_TYPE_ENEMYTOWER:
 				PlayMgr.GetInstance().plum += plum;
-				GameObject.FindWithTag("plum").SendMessage("RefreshPlum");
+				GameObject.FindWithTag("plum").SendMessage("SaveTempPlumInGame", plum);
+				GameObject.FindWithTag("plum").SendMessage("SavePlum");
 				GameObject.FindWithTag("GM").SendMessage("GameOver", true);
 				break;
 			case EnumCharacterType.CHARACTER_TYPE_ENEMY1:
-				PlayMgr.GetInstance().plum += plum;
-				GameObject.FindWithTag("plum").SendMessage("RefreshPlum");
+				GameObject.FindWithTag("plum").SendMessage("SaveTempPlumInGame", plum);
 				break;
 			case EnumCharacterType.CHARACTER_TYPE_ENEMY2:
-				PlayMgr.GetInstance().plum += plum;
-				GameObject.FindWithTag("plum").SendMessage("RefreshPlum");
+				GameObject.FindWithTag("plum").SendMessage("SaveTempPlumInGame", plum);
 				break;
 			}
 		}

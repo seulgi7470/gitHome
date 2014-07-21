@@ -114,7 +114,7 @@ public class PlayMgr {
 		//Save the List
 		bf.Serialize(ms,mOpenUnitList);
 		//Add it to playerprefs
-		PlayerPrefs.SetString("mOpenUnitList", Convert.ToBase64String(ms.GetBuffer()));
+		PlayerPrefs.SetString("OpenUnitList", Convert.ToBase64String(ms.GetBuffer()));
 
 	}
 	public List<int> GetOpenUnitList()

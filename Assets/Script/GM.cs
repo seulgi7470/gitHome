@@ -57,7 +57,7 @@ public class GM : MonoBehaviour {
 		Debug.Log ("get CurrentStageNo = " + stageNo);
 		stageText.text = (PlayMgr.GetInstance().currentStageNo + 1).ToString("N0");
 		PlayMgr.GetInstance().GetOpenUnitList();
-
+		GameObject.FindWithTag("plum").SendMessage("ClearTempPlum");
 	}
 	
 	// Update is called once per frame
