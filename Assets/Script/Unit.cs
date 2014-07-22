@@ -26,7 +26,6 @@ public class Unit : MonoBehaviour {
 	bool mbDied = false;
 	EnumAnimationState mAnimationState = EnumAnimationState.ANIMATION_STATE_NONE;
 	SPSpriteAnimation mSpriteAnim;
-	EnumGameState mGameState;
 
 	// Use this for initialization
 	void Start () {
@@ -37,7 +36,6 @@ public class Unit : MonoBehaviour {
 
 		LoadUnitData ();
 		Animate ( EnumAnimationState.ANIMATION_STATE_MOVE );
-		mGameState = EnumGameState.GAME_STATE_PLAYGAME;
 	}
 
 	public void LoadUnitData() {
@@ -143,33 +141,29 @@ public class Unit : MonoBehaviour {
 		if(characterType == EnumCharacterType.CHARACTER_TYPE_ELEPHANT)
 		{
 			sendBC.bulletType = EnumBulletType.BULLET_TYPE_THREE;
-			sendBC.position = new Vector3(gameObject.transform.localPosition.x + 130.0f,
-			                              gameObject.transform.localPosition.y + 90.0f,
-			                              0);
+			sendBC.position = gameObject.transform.localPosition + 
+				gameObject.transform.FindChild("BulletSpawn").localPosition;
 			sendBC.prefab = "Prefabs/Water";
 		}
 		else if(characterType == EnumCharacterType.CHARACTER_TYPE_ALPACA)
 		{
 			sendBC.bulletType = EnumBulletType.BULLET_TYPE_ONE;
-			sendBC.position = new Vector3(gameObject.transform.localPosition.x + 85.0f,
-			                              gameObject.transform.localPosition.y + 105.0f,
-			                              0);
+			sendBC.position = gameObject.transform.localPosition + 
+				gameObject.transform.FindChild("BulletSpawn").localPosition;
 			sendBC.prefab = "Prefabs/Saliva";
 		}
 		else if(characterType == EnumCharacterType.CHARACTER_TYPE_ENEMY2)
 		{
 			sendBC.bulletType = EnumBulletType.BULLET_TYPE_ONE;
-			sendBC.position = new Vector3(gameObject.transform.localPosition.x,
-			                              gameObject.transform.localPosition.y + 48.0f,
-		                                  0);
+			sendBC.position = gameObject.transform.localPosition + 
+				gameObject.transform.FindChild("BulletSpawn").localPosition;
 			sendBC.prefab = "Prefabs/Arrow";
 		}
 		else
 		{
 			sendBC.bulletType = EnumBulletType.BULLET_TYPE_ONE;
-			sendBC.position = new Vector3(gameObject.transform.localPosition.x,
-			                              gameObject.transform.localPosition.y + 30.0f,
-			                              0);
+			sendBC.position = gameObject.transform.localPosition + 
+				gameObject.transform.FindChild("BulletSpawn").localPosition;
 			sendBC.prefab = "Prefabs/Bullet";
 		}
 		GameObject.FindWithTag ("GM").SendMessage ("CreateBullet", sendBC);

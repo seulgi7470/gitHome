@@ -28,6 +28,8 @@ public class GM : MonoBehaviour {
 	bool mbSpawnChk = true;
 	int mEnemyIndex = 0;
 	int rand;
+	float time;
+	int[] mArrGoldPlum;
 
 	// Use this for initialization
 	void Start () {
@@ -58,10 +60,18 @@ public class GM : MonoBehaviour {
 		stageText.text = (PlayMgr.GetInstance().currentStageNo + 1).ToString("N0");
 		PlayMgr.GetInstance().GetOpenUnitList();
 		GameObject.FindWithTag("plum").SendMessage("ClearTempPlum");
+		time = 0;
+		mArrGoldPlum = PlayMgr.GetInstance().GetArrGoldPlum();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if(PlayMgr.GetInstance().gameState == EnumGameState.GAME_STATE_PLAYGAME)
+		{
+			time += Time.deltaTime;
+		//	Debug.Log ("Time : " + (int)time);
+		}
+
 	}
 
 	void FixedUpdate()
@@ -232,6 +242,23 @@ public class GM : MonoBehaviour {
 
 		ChangeUItoState(EnumGameState.GAME_STATE_GAMERESULT);
 		resultUI.SendMessage("SetGameResult", win);
+		if(time <= 80)
+		{
+			mArrGoldPlum[stageNo] = 3;
+		}
+		else if(time <= 120)
+		{
+			mArrGoldPlum[stageNo] = 2;
+		}
+		else if(time <= 150)
+		{
+			mArrGoldPlum[stageNo] = 1;
+		}
+		else
+		{
+			mArrGoldPlum[stageNo] = 0;
+		}
+		PlayMgr.GetInstance().SetArrGoldPlum(mArrGoldPlum);
 		if(win)
 		{
 			PlayMgr.GetInstance().OpenNextStage();
@@ -240,6 +267,7 @@ public class GM : MonoBehaviour {
 	}
 
 	public void ReturnSelectStage() {
+		PlayMgr.GetInstance().ClearSelectedUnit();
 		Application.LoadLevel("selectstage");
 	}
 	

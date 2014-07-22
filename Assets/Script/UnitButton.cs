@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class UnitButton : MonoBehaviour {
 
 	public int buttonIndex;
-
+	public UILabel sproutText;
 	public EnumCharacterType charType;
 
 	// Use this for initializationtonI
@@ -13,6 +13,7 @@ public class UnitButton : MonoBehaviour {
 	void Start () {
 		charType = EnumCharacterType.CHARACTER_TYPE_NONE;
 		isRefresh = false;
+
 	}
 	
 	// Update is called once per frame
@@ -40,26 +41,34 @@ public class UnitButton : MonoBehaviour {
 		string spriteName = "";
 		EnumCharacterType charType1 = (EnumCharacterType)charType;
 		Transform child = gameObject.transform.FindChild ("ChooseCharImg");
+		UnitData unitdata;
+		if(charType1 != EnumCharacterType.CHARACTER_TYPE_NONE)
+			 unitdata = DataMgr.GetInstance().GetUnitData(charType1);
 		switch (charType1) {
 		case EnumCharacterType.CHARACTER_TYPE_NONE:
 			spriteName =  "btn_unit_empty";
 			child.transform.localScale = new Vector3(138,144,1);
+			sproutText.text = "";
 			break;
 		case EnumCharacterType.CHARACTER_TYPE_RAT:
-				spriteName = "btn_unit_rat";
-				child.transform.localScale = new Vector3(138,144,1);
-				break;
+			spriteName = "btn_unit_rat";
+			child.transform.localScale = new Vector3(138,144,1);
+			sproutText.text = unitdata.price.ToString("N0");
+			break;
 		case EnumCharacterType.CHARACTER_TYPE_HORSE:
-				spriteName = "btn_unit_horse";
-				child.transform.localScale = new Vector3(138,144,1);
-				break;
+			spriteName = "btn_unit_horse";
+			child.transform.localScale = new Vector3(138,144,1);
+			sproutText.text = unitdata.price.ToString("N0");
+			break;
 		case EnumCharacterType.CHARACTER_TYPE_ELEPHANT:
-				spriteName = "btn_unit_elephant";
-				child.transform.localScale = new Vector3(138,144,1);
+			spriteName = "btn_unit_elephant";
+			child.transform.localScale = new Vector3(138,144,1);
+			sproutText.text = unitdata.price.ToString("N0");
 			break;
 		case EnumCharacterType.CHARACTER_TYPE_ALPACA:
 			spriteName = "btn_unit_alpaca";
 			child.transform.localScale = new Vector3(138,144,1);
+			sproutText.text = unitdata.price.ToString("N0");
 			break;
 		}
 

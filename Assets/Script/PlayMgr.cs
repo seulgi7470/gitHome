@@ -13,6 +13,8 @@ public class PlayMgr {
 	private List<int> mOpenUnitList;
 	private int mOpenStage;
 	private int mPlum;
+	private int mGoldPlum;
+	private int[] mArrGoldPlum;
 
 	// 게임 한 판에 쓰이는 변수들
 	private List<int> mSelectedList;
@@ -36,6 +38,7 @@ public class PlayMgr {
 
 		mGameState = EnumGameState.GAME_STATE_NONE;
 
+		mArrGoldPlum = new int[12];
 	}
 
 	public static PlayMgr GetInstance()
@@ -133,6 +136,37 @@ public class PlayMgr {
 		}
 		return mOpenUnitList;
 	}
+
+	public void SetArrGoldPlum(int[] arrGoldPlum)
+	{
+		mArrGoldPlum = arrGoldPlum;
+		var bf = new BinaryFormatter();
+		var ms = new MemoryStream();
+		bf.Serialize(ms,mArrGoldPlum);
+		PlayerPrefs.SetString("ArrayGoldPlum", Convert.ToBase64String(ms.GetBuffer()));
+	}
+
+	public int[] GetArrGoldPlum()
+	{
+		var data = PlayerPrefs.GetString("ArrayGoldPlum");
+		if(!string.IsNullOrEmpty(data))
+		{
+			var bf = new BinaryFormatter();
+			var ms = new MemoryStream(Convert.FromBase64String(data));
+			mArrGoldPlum = (int[])bf.Deserialize(ms);
+		}
+		return mArrGoldPlum;
+	}
+
+	public void ClearArrGoldPlum()
+	{
+		for(int i = 0; i < mArrGoldPlum.Length; i++)
+		{
+			mArrGoldPlum[i] = 0;
+		}
+		SetArrGoldPlum(mArrGoldPlum);
+	}
+
 
 	public int sproutValue { get { return mSproutValue; } set { mSproutValue = value; } }
 

@@ -3,7 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 public class StageSelector : MonoBehaviour {
 	public int index;
+	public UILabel stageText;
+	
 	int stageNo;
+	bool mbOpenStage;
+	int[] mArrGoldPlum;
+
 	// Use this for initialization
 	void Start () {
 		stageNo = PlayMgr.GetInstance().openStageNo;
@@ -11,6 +16,15 @@ public class StageSelector : MonoBehaviour {
 		if(index <= stageNo)
 		{
 			gameObject.GetComponentInChildren<UISprite>().spriteName = "btn_stage";
+			stageText.text = (index + 1).ToString("N0");
+		}
+		mArrGoldPlum = PlayMgr.GetInstance().GetArrGoldPlum();
+		for(int i = 0; i <= mArrGoldPlum[index]; i++)
+		{
+			if(i == 0)
+				continue;
+			Debug.Log (mArrGoldPlum[index]);
+			gameObject.transform.FindChild("GoldPlum"+i).gameObject.SetActive(true);
 		}
 	}
 	
@@ -25,7 +39,6 @@ public class StageSelector : MonoBehaviour {
 			return;
 		}
 		PlayMgr.GetInstance().currentStageNo = gameObj.GetComponent<StageSelector>().index;
-	//	Debug.Log ("asd " + PlayMgr.GetInstance().currentStageNo ); 
 		Application.LoadLevel("savetheplum");
 	}
 }
