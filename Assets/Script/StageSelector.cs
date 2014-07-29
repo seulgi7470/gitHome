@@ -16,7 +16,13 @@ public class StageSelector : MonoBehaviour {
 		if(index <= stageNo)
 		{
 			gameObject.GetComponentInChildren<UISprite>().spriteName = "btn_stage";
-			stageText.text = (index + 1).ToString("N0");
+			if(index+1 / 10 == 0)
+			{
+				stageText.text = "0";
+				stageText.text += (index + 1).ToString("N0");
+			}
+			else
+				stageText.text = (index + 1).ToString("N0");
 		}
 		mArrGoldPlum = PlayMgr.GetInstance().GetArrGoldPlum();
 		for(int i = 0; i <= mArrGoldPlum[index]; i++)
