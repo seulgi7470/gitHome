@@ -46,13 +46,13 @@ public class UnitChooser: MonoBehaviour {
 
 				for(int i=1; i< 10; i++)
 				{
-					if(gameObject.transform.parent.FindChild("Choose_"+i).FindChild("UnitInfo") != null)
+					if(unitInfo != null)
 					{
-						gameObject.transform.parent.FindChild("Choose_"+i).FindChild("UnitInfo").gameObject.SetActive(false);
-						gameObject.transform.parent.FindChild("Choose_"+i).GetComponent<UnitChooser>().mbSelected = false;
-						gameObject.transform.parent.FindChild("Choose_"+i).GetComponent<UnitChooser>().mbOpenedSelected = false;
+						UnitChooser unitChooser = gameObject.transform.parent.FindChild("Choose_"+i).GetComponent<UnitChooser>();
+						unitChooser.unitInfo.gameObject.SetActive(false);
+						unitChooser.mbSelected = false;
+						unitChooser.mbOpenedSelected = false;
 					}
-
 				}
 
 				do
@@ -75,7 +75,6 @@ public class UnitChooser: MonoBehaviour {
 						spriteName = "unit_alpaca";
 						break;
 					}
-					unitInfo.transform.FindChild("BuyBtn").GetComponent<UIButtonMessage>().target = gameObject;
 					unitInfo.SetActive(true);
 
 					UISprite imgSprite = unitInfo.transform.FindChild("UnitInfo_Img").GetComponent<UISprite>();
@@ -84,7 +83,12 @@ public class UnitChooser: MonoBehaviour {
 			
 					UILabel txtLabel = unitInfo.transform.FindChild("UnitPlumTxt").GetComponent<UILabel>();
 					txtLabel.text = unitdata.name + "\n\n";
-					txtLabel.text += unitdata.plum.ToString("N0");
+					txtLabel.text += "황금자두 " + unitdata.plum.ToString("N0") + "에\n합류 가능";
+
+					GameObject btnBuy = unitInfo.transform.FindChild("BuyBtn").gameObject;
+					btnBuy.SetActive(true);
+					btnBuy.GetComponent<UIButtonMessage>().target = gameObject;
+
 					mbSelected = true;
 
 				}while(false);
@@ -142,11 +146,12 @@ public class UnitChooser: MonoBehaviour {
 
 				for(int i=1; i< 10; i++)
 				{
-					if(gameObject.transform.parent.FindChild("Choose_"+i).FindChild("UnitInfo") != null)
+					if(unitInfo != null)
 					{
-						gameObject.transform.parent.FindChild("Choose_"+i).FindChild("UnitInfo").gameObject.SetActive(false);
-						gameObject.transform.parent.FindChild("Choose_"+i).GetComponent<UnitChooser>().mbSelected = false;
-						gameObject.transform.parent.FindChild("Choose_"+i).GetComponent<UnitChooser>().mbOpenedSelected = false;
+						UnitChooser unitChooser = gameObject.transform.parent.FindChild("Choose_"+i).GetComponent<UnitChooser>();
+						unitChooser.unitInfo.gameObject.SetActive(false);
+						unitChooser.mbSelected = false;
+						unitChooser.mbOpenedSelected = false;
 					}
 				}
 				unitdata = DataMgr.GetInstance().GetUnitData(openCharacterType);
@@ -170,8 +175,6 @@ public class UnitChooser: MonoBehaviour {
 						spriteName = "unit_alpaca";
 						break;
 	                }
-					unitInfo.transform.FindChild("BuyBtn").GetComponent<UIButtonMessage>().target = gameObject;
-
 					unitInfo.SetActive(true);
 					UISprite imgSprite = unitInfo.transform.FindChild("UnitInfo_Img").GetComponent<UISprite>();
 					imgSprite.spriteName = spriteName;
@@ -180,22 +183,23 @@ public class UnitChooser: MonoBehaviour {
 					UILabel infoLabel = unitInfo.transform.FindChild("UnitPlumTxt").GetComponent<UILabel>();
 					infoLabel.text = unitdata.name + "\n\n";
 					infoLabel.text += unitdata.contents;
+					unitInfo.transform.FindChild("BuyBtn").GetComponent<UIButtonMessage>().target = gameObject;
 
 				}while(false);
                 
 				unitInfo.transform.FindChild("BuyBtn").gameObject.SetActive(false);
-           //     unitInfo.transform.FindChild("UnitPlumTxt").gameObject.SetActive(false);
                 mbOpenedSelected = true;
             }
             else // 오픈된 유닛 선택이 취소되었을 때
 			{
 				for(int i=1; i< 10; i++)
 				{
-					if(gameObject.transform.parent.FindChild("Choose_"+i).FindChild("UnitInfo") != null)
+					if(unitInfo != null)
 					{
-						gameObject.transform.parent.FindChild("Choose_"+i).FindChild("UnitInfo").gameObject.SetActive(false);
-						gameObject.transform.parent.FindChild("Choose_"+i).GetComponent<UnitChooser>().mbSelected = false;
-						gameObject.transform.parent.FindChild("Choose_"+i).GetComponent<UnitChooser>().mbOpenedSelected = false;
+						UnitChooser unitChooser = gameObject.transform.parent.FindChild("Choose_"+i).GetComponent<UnitChooser>();
+						unitChooser.unitInfo.gameObject.SetActive(false);
+						unitChooser.mbSelected = false;
+						unitChooser.mbOpenedSelected = false;
 					}
 				}
 
