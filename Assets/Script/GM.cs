@@ -242,21 +242,25 @@ public class GM : MonoBehaviour {
 
 		ChangeUItoState(EnumGameState.GAME_STATE_GAMERESULT);
 		resultUI.SendMessage("SetGameResult", win);
-		if(time <= 80)
+		if(time <= 100)
 		{
 			mArrGoldPlum[stageNo] = 3;
-		}
-		else if(time <= 120)
-		{
-			mArrGoldPlum[stageNo] = 2;
+			PlayMgr.GetInstance().plum += (stageNo + 1) * 3 * 43;
 		}
 		else if(time <= 150)
 		{
+			mArrGoldPlum[stageNo] = 2;
+			PlayMgr.GetInstance().plum += (stageNo + 1) * 2 * 43;
+		}
+		else if(time <= 200)
+		{
 			mArrGoldPlum[stageNo] = 1;
+			PlayMgr.GetInstance().plum += (stageNo + 1) * 1 * 43;
 		}
 		else
 		{
 			mArrGoldPlum[stageNo] = 0;
+			PlayMgr.GetInstance().plum += (stageNo + 1) * 0 * 43;
 		}
 		PlayMgr.GetInstance().SetArrGoldPlum(mArrGoldPlum);
 		if(win)
