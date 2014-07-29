@@ -26,19 +26,29 @@ public class PlayMgr {
 
 	private PlayMgr()
 	{
-		mSelectedList = new List<int> ();
-
+		
 		mUnitList = new List<int> ();
-		mOpenUnitList = new List<int> ();
+        mUnitList.Add((int)EnumCharacterType.CHARACTER_TYPE_RAT);
+        mUnitList.Add((int)EnumCharacterType.CHARACTER_TYPE_HORSE);
+        mUnitList.Add((int)EnumCharacterType.CHARACTER_TYPE_ELEPHANT);
+        mUnitList.Add((int)EnumCharacterType.CHARACTER_TYPE_ALPACA);
 
-		mUnitList.Add((int)EnumCharacterType.CHARACTER_TYPE_RAT);
-		mUnitList.Add((int)EnumCharacterType.CHARACTER_TYPE_HORSE);
-		mUnitList.Add((int)EnumCharacterType.CHARACTER_TYPE_ELEPHANT);
-		mUnitList.Add((int)EnumCharacterType.CHARACTER_TYPE_ALPACA);
+        mOpenUnitList = new List<int> ();
 
-		mGameState = EnumGameState.GAME_STATE_NONE;
+        mOpenStage = 0;
+        mPlum = 0;
+        mGoldPlum = 0;
 
-		mArrGoldPlum = new int[12];
+        mArrGoldPlum = new int[12];
+
+
+        ////////////////////
+        mSelectedList = new List<int>();
+        mSproutValue = 0;
+        mCurrentStage = 0;
+        mGameState = EnumGameState.GAME_STATE_NONE;
+
+		Load();
 	}
 
 	public static PlayMgr GetInstance()
@@ -110,51 +120,22 @@ public class PlayMgr {
 			}
 		}
 
-		//Get a binary formatter
-		var bf = new BinaryFormatter();
-		//Create an in memory stream;
-		var ms = new MemoryStream();
-		//Save the List
-		bf.Serialize(ms,mOpenUnitList);
-		//Add it to playerprefs
-		PlayerPrefs.SetString("OpenUnitList", Convert.ToBase64String(ms.GetBuffer()));
+        Save();
 
 	}
 	public List<int> GetOpenUnitList()
 	{
-		//Get the data
-		var data = PlayerPrefs.GetString("OpenUnitList");
-		//if not blank then load it
-		if(!string.IsNullOrEmpty(data))
-		{
-			//Binary formatter for loading back
-			var bf = new BinaryFormatter();
-			//Create a memory stream with the data
-			var ms = new MemoryStream(Convert.FromBase64String(data));
-			//Load back the List;
-			mOpenUnitList = (List<int>)bf.Deserialize(ms);
-		}
 		return mOpenUnitList;
 	}
 
 	public void SetArrGoldPlum(int[] arrGoldPlum)
 	{
 		mArrGoldPlum = arrGoldPlum;
-		var bf = new BinaryFormatter();
-		var ms = new MemoryStream();
-		bf.Serialize(ms,mArrGoldPlum);
-		PlayerPrefs.SetString("ArrayGoldPlum", Convert.ToBase64String(ms.GetBuffer()));
+        Save();
 	}
 
 	public int[] GetArrGoldPlum()
 	{
-		var data = PlayerPrefs.GetString("ArrayGoldPlum");
-		if(!string.IsNullOrEmpty(data))
-		{
-			var bf = new BinaryFormatter();
-			var ms = new MemoryStream(Convert.FromBase64String(data));
-			mArrGoldPlum = (int[])bf.Deserialize(ms);
-		}
 		return mArrGoldPlum;
 	}
 
@@ -168,17 +149,25 @@ public class PlayMgr {
 	}
 
 
-	public int sproutValue { get { return mSproutValue; } set { mSproutValue = value; } }
+	public int sproutValue { 
+        get { return mSproutValue; } 
+        set { mSproutValue = value; }
+    }
 
-	public int currentStageNo { get { mCurrentStage = PlayerPrefs.GetInt("currentStageNo");	return mCurrentStage; } 
-		set { mCurrentStage = value;   PlayerPrefs.SetInt("currentStageNo", mCurrentStage);} }
+	public int currentStageNo { 
+        get { return mCurrentStage; }
+        set { mCurrentStage = value; Save(); }
+    }
 
-	public int openStageNo { get { mOpenStage = PlayerPrefs.GetInt("OpenStageNo");	return mOpenStage; } 
-		set { mOpenStage = value;   PlayerPrefs.SetInt("OpenStageNo", mOpenStage);} }
+	public int openStageNo { 
+        get { return mOpenStage; }
+        set { mOpenStage = value; Save();  }
+    }
 
-	
-	public int plum { get { mPlum = PlayerPrefs.GetInt("plum");	return mPlum; } 
-		set { mPlum = value;   PlayerPrefs.SetInt("plum", mPlum);} }
+	public int plum { 
+        get { return mPlum; }
+        set { mPlum = value; Save(); }  
+    }
 
 	public void OpenNextStage()
 	{
@@ -189,5 +178,80 @@ public class PlayMgr {
 	}
 
 	public EnumGameState gameState { get { return mGameState; } set { mGameState = value; } }
+
+    public void Save()
+    {
+        //OpenUnitList
+        do
+        {
+            //Get a binary formatter
+            var bf = new BinaryFormatter();
+            //Create an in memory stream;
+            var ms = new MemoryStream();
+            //Save the List
+            bf.Serialize(ms, mOpenUnitList);
+            //Add it to playerprefs
+            PlayerPrefs.SetString("OpenUnitList", Convert.ToBase64String(ms.GetBuffer()));
+        } while (false);
+
+        //Stage Gold Plum
+        do
+        {
+            var bf = new BinaryFormatter();
+            var ms = new MemoryStream();
+            bf.Serialize(ms, mArrGoldPlum);
+            PlayerPrefs.SetString("ArrayGoldPlum", Convert.ToBase64String(ms.GetBuffer()));
+        } while (false);
+
+        //CurrentStageNo
+        PlayerPrefs.SetInt("currentStageNo", mCurrentStage);
+
+        //OpenStageNo
+        PlayerPrefs.SetInt("OpenStageNo", mOpenStage);
+        
+        //Plum (Money)
+        PlayerPrefs.SetInt("plum", mPlum);
+    }
+
+    public void Load()
+    {
+        //OpenUnitList
+        do
+        {
+            //Get the data
+            var data = PlayerPrefs.GetString("OpenUnitList");
+            //if not blank then load it
+            if (!string.IsNullOrEmpty(data))
+            {
+                //Binary formatter for loading back
+                var bf = new BinaryFormatter();
+                //Create a memory stream with the data
+                var ms = new MemoryStream(Convert.FromBase64String(data));
+                //Load back the List;
+                mOpenUnitList = (List<int>)bf.Deserialize(ms);
+            }
+        } while (false);
+
+        //Stage Gold Plum
+        do
+        {
+            var data = PlayerPrefs.GetString("ArrayGoldPlum");
+            if (!string.IsNullOrEmpty(data))
+            {
+                var bf = new BinaryFormatter();
+                var ms = new MemoryStream(Convert.FromBase64String(data));
+                mArrGoldPlum = (int[])bf.Deserialize(ms);
+            }
+        } while (false);
+
+        //CurrentStageNo
+        mCurrentStage = PlayerPrefs.GetInt("currentStageNo");
+
+        //OpenStageNo
+        mOpenStage = PlayerPrefs.GetInt("OpenStageNo");
+
+        //Plum (Money)
+        mPlum = PlayerPrefs.GetInt("plum");
+    }
 
 }

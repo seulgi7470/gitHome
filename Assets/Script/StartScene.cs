@@ -23,14 +23,9 @@ public class StartScene : MonoBehaviour {
 	}
 
 	void StartGame() {
-		PlayMgr.GetInstance().currentStageNo = 0;
-//		PlayMgr.GetInstance().openStageNo = 0;
-		PlayMgr.GetInstance().plum = 5000;
-//		PlayMgr.GetInstance().ClearArrGoldPlum();
-		if(PlayMgr.GetInstance().GetOpenUnitList()[0] == (int)EnumCharacterType.CHARACTER_TYPE_NONE)
-			PlayMgr.GetInstance().SetOpenUnitList(EnumCharacterType.CHARACTER_TYPE_RAT);
-		PlayMgr.GetInstance().GetOpenUnitList();
-		Application.LoadLevel("selectstage");
-	}										
+        PlayMgr.GetInstance().Load();
+        PlayMgr.GetInstance().SetOpenUnitList(EnumCharacterType.CHARACTER_TYPE_RAT);
 
-}
+		Application.LoadLevel("selectstage");
+	}				
+}		
