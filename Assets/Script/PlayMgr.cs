@@ -46,10 +46,13 @@ public class PlayMgr {
         mSelectedList = new List<int>();
         mSproutValue = 0;
         mCurrentStage = 0;
-        mGameState = EnumGameState.GAME_STATE_NONE;
 
-		Load();
+		mGameState = EnumGameState.GAME_STATE_NONE;
+
+		Load ();
+		PlayMgr.GetInstance().SetOpenUnitList(EnumCharacterType.CHARACTER_TYPE_RAT);
 	}
+
 
 	public static PlayMgr GetInstance()
 	{

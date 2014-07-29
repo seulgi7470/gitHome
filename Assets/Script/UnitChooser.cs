@@ -75,6 +75,7 @@ public class UnitChooser: MonoBehaviour {
 						spriteName = "unit_alpaca";
 						break;
 					}
+					unitInfo.transform.FindChild("BuyBtn").GetComponent<UIButtonMessage>().target = gameObject;
 					unitInfo.SetActive(true);
 
 					UISprite imgSprite = unitInfo.transform.FindChild("UnitInfo_Img").GetComponent<UISprite>();
@@ -169,6 +170,8 @@ public class UnitChooser: MonoBehaviour {
 						spriteName = "unit_alpaca";
 						break;
 	                }
+					unitInfo.transform.FindChild("BuyBtn").GetComponent<UIButtonMessage>().target = gameObject;
+
 					unitInfo.SetActive(true);
 					UISprite imgSprite = unitInfo.transform.FindChild("UnitInfo_Img").GetComponent<UISprite>();
 					imgSprite.spriteName = spriteName;
