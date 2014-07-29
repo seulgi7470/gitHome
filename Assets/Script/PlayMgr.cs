@@ -50,7 +50,7 @@ public class PlayMgr {
 		mGameState = EnumGameState.GAME_STATE_NONE;
 
 		Load ();
-		PlayMgr.GetInstance().SetOpenUnitList(EnumCharacterType.CHARACTER_TYPE_RAT);
+		SetOpenUnitList(EnumCharacterType.CHARACTER_TYPE_RAT);
 	}
 
 
