@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class UIResult : MonoBehaviour {
-	public UILabel resultText;
+	public UISprite resultText;
 	public GameObject nextBtn;
 
 	private bool _win = false;
@@ -22,14 +22,20 @@ public class UIResult : MonoBehaviour {
 			if(nextBtn)
 				nextBtn.SetActive(true);
 			if(resultText)
-				resultText.text = " You win ";
+			{
+				resultText.spriteName = "txt_rescue";
+				resultText.MakePixelPerfect();
+			}
 		}
 		else
 		{
 			if(nextBtn)
 				nextBtn.SetActive(false);
 			if(resultText)
-				resultText.text = " You Lose ";
+			{
+				resultText.spriteName ="txt_fail";
+				resultText.MakePixelPerfect();
+			}
 		}
 		_refresh = false;
 		

@@ -39,6 +39,8 @@ public class UnitChooser: MonoBehaviour {
 				mbSelected = false;
 			}
 			else{ // 유닛 선택
+				if( index >= mUnitList.Count )
+					return;
 				characterType =(EnumCharacterType)mUnitList[index];
 				unitdata = DataMgr.GetInstance().GetUnitData(characterType);
 
@@ -53,43 +55,37 @@ public class UnitChooser: MonoBehaviour {
 
 				}
 
-				switch(characterType)
+				do
 				{
-				case EnumCharacterType.CHARACTER_TYPE_NONE:
-					break;
-				case EnumCharacterType.CHARACTER_TYPE_RAT:
+					if( characterType == EnumCharacterType.CHARACTER_TYPE_NONE )
+						break;
+					string spriteName = "";
+					switch(characterType)
+					{
+					case EnumCharacterType.CHARACTER_TYPE_RAT:
+						spriteName = "unit_rat";
+						break;
+					case EnumCharacterType.CHARACTER_TYPE_ELEPHANT: 
+						spriteName = "unit_elephant";
+						break;
+					case EnumCharacterType.CHARACTER_TYPE_HORSE:
+						spriteName = "unit_horse";
+						break;
+					case EnumCharacterType.CHARACTER_TYPE_ALPACA:
+						spriteName = "unit_alpaca";
+						break;
+					}
 					unitInfo.SetActive(true);
-					unitInfo.transform.FindChild("UnitInfo_Img")
-						.GetComponentInChildren<UISprite>().spriteName = "unit_rat";
-					unitInfo.transform.FindChild("UnitPlumTxt").GetComponent<UILabel>().text
-						= unitdata.plum.ToString("N0");
+
+					UISprite imgSprite = unitInfo.transform.FindChild("UnitInfo_Img").GetComponent<UISprite>();
+					imgSprite.spriteName = spriteName;
+					imgSprite.MakePixelPerfect();
+			
+					UILabel txtLabel = unitInfo.transform.FindChild("UnitPlumTxt").GetComponent<UILabel>();
+					txtLabel.text = unitdata.plum.ToString("N0");
 					mbSelected = true;
-					break;
-				case EnumCharacterType.CHARACTER_TYPE_ELEPHANT:
-					unitInfo.SetActive(true);
-					unitInfo.transform.FindChild("UnitInfo_Img")
-						.GetComponentInChildren<UISprite>().spriteName = "unit_elephant";
-					unitInfo.transform.FindChild("UnitPlumTxt").GetComponent<UILabel>().text
-						= unitdata.plum.ToString("N0");
-					mbSelected = true;
-					break;
-				case EnumCharacterType.CHARACTER_TYPE_HORSE:
-					unitInfo.SetActive(true);
-					unitInfo.transform.FindChild("UnitInfo_Img")
-						.GetComponentInChildren<UISprite>().spriteName = "unit_horse";
-					unitInfo.transform.FindChild("UnitPlumTxt").GetComponent<UILabel>().text
-						= unitdata.plum.ToString("N0");
-					mbSelected = true;
-					break;
-				case EnumCharacterType.CHARACTER_TYPE_ALPACA:
-					unitInfo.SetActive(true);
-					unitInfo.transform.FindChild("UnitInfo_Img")
-						.GetComponentInChildren<UISprite>().spriteName = "unit_alpaca";
-					unitInfo.transform.FindChild("UnitPlumTxt").GetComponent<UILabel>().text
-						= unitdata.plum.ToString("N0");
-					mbSelected = true;
-					break;
-				}
+
+				}while(false);
 			}
 		}
 		else if(mbOpened && mbSelected)  // 유닛이 열려있고, 열리기전에 선택되었을 때
@@ -103,6 +99,8 @@ public class UnitChooser: MonoBehaviour {
 		mOpenUnitList = PlayMgr.GetInstance().GetOpenUnitList();
 		if(mOpenUnitList.Count > 0)
 		{
+			if( index >= mOpenUnitList.Count )
+				return;
 			openCharacterType = (EnumCharacterType)mOpenUnitList[index];
 			switch(openCharacterType)
 			{
@@ -150,32 +148,33 @@ public class UnitChooser: MonoBehaviour {
 					}
 				}
 
-				switch(openCharacterType)
+				do
 				{
-				case EnumCharacterType.CHARACTER_TYPE_NONE:
-					break;
-				case EnumCharacterType.CHARACTER_TYPE_RAT:
+					if(openCharacterType == EnumCharacterType.CHARACTER_TYPE_NONE)
+						break;
+					string spriteName = "";
+					switch(openCharacterType)
+					{
+					case EnumCharacterType.CHARACTER_TYPE_RAT:
+						spriteName = "unit_rat";
+						break;
+					case EnumCharacterType.CHARACTER_TYPE_ELEPHANT:
+						spriteName = "unit_elephant";
+	               		break;
+	            	case EnumCharacterType.CHARACTER_TYPE_HORSE:
+						spriteName = "unit_horse";
+	        			break;
+					case EnumCharacterType.CHARACTER_TYPE_ALPACA:
+						spriteName = "unit_alpaca";
+						break;
+	                }
 					unitInfo.SetActive(true);
-					unitInfo.transform.FindChild("UnitInfo_Img")
-						.GetComponentInChildren<UISprite>().spriteName = "unit_rat";
-					break;
-				case EnumCharacterType.CHARACTER_TYPE_ELEPHANT:
-					unitInfo.gameObject.SetActive(true);
-					unitInfo.transform.FindChild("UnitInfo_Img")
-                         .GetComponentInChildren<UISprite>().spriteName = "unit_elephant";
-               		break;
-            	case EnumCharacterType.CHARACTER_TYPE_HORSE:
-					unitInfo.SetActive(true);
-					unitInfo.transform.FindChild("UnitInfo_Img")
-						.GetComponentInChildren<UISprite>().spriteName = "unit_horse";
-        			break;
-				case EnumCharacterType.CHARACTER_TYPE_ALPACA:
-					unitInfo.SetActive(true);
-					unitInfo.transform.FindChild("UnitInfo_Img")
-						.GetComponentInChildren<UISprite>().spriteName = "unit_alpaca";
-					break;
-                }
-                unitInfo.transform.FindChild("BuyBtn").gameObject.SetActive(false);
+					UISprite imgSprite = unitInfo.transform.FindChild("UnitInfo_Img").GetComponent<UISprite>();
+					imgSprite.spriteName = spriteName;
+					imgSprite.MakePixelPerfect();
+				}while(false);
+                
+				unitInfo.transform.FindChild("BuyBtn").gameObject.SetActive(false);
                 unitInfo.transform.FindChild("UnitPlumTxt").gameObject.SetActive(false);
                 mbOpenedSelected = true;
             }
@@ -202,6 +201,8 @@ public class UnitChooser: MonoBehaviour {
     
     public void BuyUnit(GameObject gameObj)
     {
+		if( index >= mUnitList.Count )
+			return;
 		characterType =(EnumCharacterType)mUnitList[index];
 		unitdata = DataMgr.GetInstance().GetUnitData(characterType);
 

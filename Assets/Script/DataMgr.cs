@@ -98,7 +98,7 @@ public class DataMgr {
 		{
 			UnitData unitData;
 			unitData.maxHp = 300;
-			unitData.speed = 1;
+			unitData.speed = 2;
 			unitData.power = 50;
 			unitData.range = 150;
 			unitData.bulletDelay = 1;
@@ -113,7 +113,7 @@ public class DataMgr {
 		{
 			UnitData unitData;
 			unitData.maxHp = 200;
-			unitData.speed = 1;
+			unitData.speed = 2;
 			unitData.power = 50;
 			unitData.range = 400;
 			unitData.bulletDelay = 2;
