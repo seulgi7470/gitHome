@@ -73,15 +73,17 @@ namespace CommonData
 
 	public struct UnitData
 	{
-		public int unitDelay; //생성 딜레이
-		public int bulletDelay; //장전 시간
+		public string name; // 유닛 이름
+		public string contents; // 유닛 내용
+		public float maxHp; //최대 에너지
 		public int power;  //파워
 		public int range;  //공격 범위
 		public int price;  //유닛 가격
 		public int plum;   //유닛 오픈할 때 가격
+		public int unitDelay; //생성 딜레이
+		public int bulletDelay; //장전 시간
 		public float speed; //유닛 이동 속도 
 		public int bulletSpeed; //불릿 발사 속도
-		public float maxHp; //최대 에너지
 	};
 
 	public static class Depth

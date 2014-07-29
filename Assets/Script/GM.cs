@@ -291,7 +291,7 @@ public class GM : MonoBehaviour {
 		else
 		{
 			ChangeUItoState(EnumGameState.GAME_STATE_PLAYGAME);
-			PlayMgr.GetInstance().sproutValue = 120;
+			PlayMgr.GetInstance().sproutValue = 30 + stageNo*10;
 			StartCoroutine (CreateEnemy ());
 		}
 	}

@@ -82,7 +82,8 @@ public class UnitChooser: MonoBehaviour {
 					imgSprite.MakePixelPerfect();
 			
 					UILabel txtLabel = unitInfo.transform.FindChild("UnitPlumTxt").GetComponent<UILabel>();
-					txtLabel.text = unitdata.plum.ToString("N0");
+					txtLabel.text = unitdata.name + "\n\n";
+					txtLabel.text += unitdata.plum.ToString("N0");
 					mbSelected = true;
 
 				}while(false);
@@ -147,7 +148,7 @@ public class UnitChooser: MonoBehaviour {
 						gameObject.transform.parent.FindChild("Choose_"+i).GetComponent<UnitChooser>().mbOpenedSelected = false;
 					}
 				}
-
+				unitdata = DataMgr.GetInstance().GetUnitData(openCharacterType);
 				do
 				{
 					if(openCharacterType == EnumCharacterType.CHARACTER_TYPE_NONE)
@@ -172,10 +173,15 @@ public class UnitChooser: MonoBehaviour {
 					UISprite imgSprite = unitInfo.transform.FindChild("UnitInfo_Img").GetComponent<UISprite>();
 					imgSprite.spriteName = spriteName;
 					imgSprite.MakePixelPerfect();
+
+					UILabel infoLabel = unitInfo.transform.FindChild("UnitPlumTxt").GetComponent<UILabel>();
+					infoLabel.text = unitdata.name + "\n\n";
+					infoLabel.text += unitdata.contents;
+
 				}while(false);
                 
 				unitInfo.transform.FindChild("BuyBtn").gameObject.SetActive(false);
-                unitInfo.transform.FindChild("UnitPlumTxt").gameObject.SetActive(false);
+           //     unitInfo.transform.FindChild("UnitPlumTxt").gameObject.SetActive(false);
                 mbOpenedSelected = true;
             }
             else // 오픈된 유닛 선택이 취소되었을 때
@@ -192,7 +198,7 @@ public class UnitChooser: MonoBehaviour {
 
                 PlayMgr.GetInstance().RemoveSelectedUnit(openCharacterType);
                 gameObject.transform.FindChild("Img_Selected").gameObject.SetActive(false);
-                unitInfo.SetActive(false);
+                unitInfo.SetActive(true);
                 mbOpenedSelected = false;
             }
         }
