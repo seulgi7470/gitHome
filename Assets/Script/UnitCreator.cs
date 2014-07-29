@@ -28,6 +28,9 @@ public class UnitCreator: MonoBehaviour {
 		
 		EnumCharacterType charType = PlayMgr.GetInstance().GetSelectedUnitAt(mButtonIndex);
 
+		if( charType == EnumCharacterType.CHARACTER_TYPE_NONE )
+			return;
+
 		UnitData unitData =  DataMgr.GetInstance().GetUnitData(charType);
 		mUnitPrice = unitData.price;
 		mUnitDelay = unitData.unitDelay;

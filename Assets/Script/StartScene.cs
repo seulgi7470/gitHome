@@ -4,11 +4,6 @@ using CommonData;
 using System.Collections.Generic;
 
 public class StartScene : MonoBehaviour {
-
-	public GameObject OpenUnitPool;
-
-	List<int> mOpenUnitList;
-
 	// Use this for initialization
 	void Start () {
 
@@ -16,7 +11,15 @@ public class StartScene : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if( Input.touchCount > 0 || Input.GetMouseButtonDown(0))
+		{
+			StartGame ();
+		}
 
+		if(Input.GetKeyDown(KeyCode.Escape))
+		{
+			Application.Quit();
+		}
 	}
 
 	void StartGame() {
@@ -29,11 +32,4 @@ public class StartScene : MonoBehaviour {
 		Application.LoadLevel("selectstage");
 	}										
 
-	public void OnPressedStartBtn(GameObject gameObj) {
-		gameObj.GetComponentInChildren<UISprite>().spriteName = "btn_start_on";
-	}
-	
-	public void OnReleasedStartBtn(GameObject gameObj) {
-		gameObj.GetComponentInChildren<UISprite>().spriteName = "btn_start";
-	}
 }
