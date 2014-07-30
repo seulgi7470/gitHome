@@ -72,6 +72,19 @@ public class GM : MonoBehaviour {
 		//	Debug.Log ("Time : " + (int)time);
 		}
 
+
+		if(Input.GetKeyDown(KeyCode.Escape))
+		{
+			if( PlayMgr.GetInstance().gameState == EnumGameState.GAME_STATE_PLAYGAME )
+			{
+				PauseGame();
+			}
+			else 
+			{
+				ReturnSelectStage();
+			}
+		}
+
 	}
 
 	void FixedUpdate()
